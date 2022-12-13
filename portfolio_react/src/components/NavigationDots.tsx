@@ -1,11 +1,11 @@
 import React from 'react';
 
-export const NavigationDots: React.FC<{active: string}> = ({
+const NavigationDots: React.FC<{active: string}> = ({
     active,
 }) => {
     return (
         <div className="app__navigation">
-            {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
+            {['home', 'about', 'projects', 'contact'].map((item, index) => (
                 <a 
                 href={`#${item}`}
                 key={item + index}
@@ -16,3 +16,5 @@ export const NavigationDots: React.FC<{active: string}> = ({
         </div>
     );
 };
+
+export default NavigationDots;

@@ -2,7 +2,7 @@ import React from 'react';
 import { BsTwitter, BsInstagram } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
 
-export const SocialMedia = () => {
+const SocialMedia = () => {
     return (
         <div className="app__social">
             <div>
@@ -17,3 +17,5 @@ export const SocialMedia = () => {
         </div>
     )
 }
+
+export default SocialMedia;
