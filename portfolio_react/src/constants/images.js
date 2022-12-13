@@ -12,11 +12,16 @@ import javascript from '../assets/javascript.png';
 import mu5 from '../assets/mu5.png';
 import node from '../assets/node.png';
 import python from '../assets/python.png';
-import react from '../assets/react.png';
+import react1 from '../assets/react1.png';
+import react2 from '../assets/react2.png';
 import redux from '../assets/redux.png';
 import sass from '../assets/sass.png';
 import typescript from '../assets/typescript.png';
 import vue from '../assets/vue.png';
+import androidstudio from '../assets/androidstudio.png';
+import java from '../assets/java.png';
+import sql from '../assets/sql.png';
+import csharp from '../assets/C#.png';
 
 import about01 from '../assets/about01.png';
 import about02 from '../assets/about02.png';
@@ -52,11 +57,16 @@ export default {
   mu5,
   node,
   python,
-  react,
+  react1,
+  react2,
   redux,
   sass,
   typescript,
   vue,
+  androidstudio,
+  java,
+  sql,
+  csharp,
   about01,
   about02,
   about03,

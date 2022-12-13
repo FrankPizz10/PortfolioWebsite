@@ -5,16 +5,25 @@ import { AppWrap } from "../../wrapper";
 import { images } from "../../constants";
 import './About.scss';
 
+
+// Typescript - web developement
+// C# - object oriented programming
+// React - front end development
+// Sql - database management
+// Python - data science
 const abouts = [
-    {title: 'Web Development', descripton: 'I have', imgUrl: images.about01},
-    {title: 'Full Stack', descripton: 'I have', imgUrl: images.about02},
-    {title: 'Android Development', descripton: 'I have', imgUrl: images.about03},
+    {title: 'TypeScript', descripton: 'For: Web Development', imgUrl: images.typescript},
+    {title: 'React', descripton: 'For: Front End Development', imgUrl: images.react2},
+    {title: 'C#', descripton: 'For: Object-Oriented Development', imgUrl: images.csharp},
+    {title: 'Java', descripton: 'For: Android Development', imgUrl: images.java},
+    {title: 'Python', descripton: 'For: Data Processing and Machine Learning', imgUrl: images.python},
+    {title: 'SQL', descripton: 'For: Database Management', imgUrl: images.sql},
 ]
 
 const About = () => {
     return (
         <>
-            <h2 className="head-text">I Know That <span>Good Design</span><br />means <span>Good Business</span></h2>
+            <h2 className="head-text">My Go-To Tech Stack</h2>
 
             <div className="app__profiles">
                 {abouts.map((about, index) => (

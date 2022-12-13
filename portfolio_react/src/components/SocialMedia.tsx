@@ -1,18 +1,18 @@
 import React from 'react';
-import { BsTwitter, BsInstagram } from 'react-icons/bs';
-import { FaFacebookF } from 'react-icons/fa';
+import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 
 const SocialMedia = () => {
     return (
         <div className="app__social">
             <div>
-                <BsTwitter />
+                <a href='https://www.linkedin.com/in/frank-pizzella-8680461a0/'>
+                    <AiFillLinkedin />
+                </a>
             </div>
             <div>
-                <BsInstagram />
-            </div>
-            <div>
-                <FaFacebookF />
+                <a href="https://github.com/FrankPizz10">
+                    <AiFillGithub />
+                </a>
             </div>
         </div>
     )
