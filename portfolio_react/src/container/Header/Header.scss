@@ -60,6 +60,7 @@
         padding: 1rem 2rem;
         border: var(--white-color);
         border-radius: 15px;
+        font-weight: 900;
         flex-direction: row;
         width: auto;
 
@@ -163,14 +164,15 @@
     flex: 1;
     height: 100%;
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
     position: relative;
 
     img {
-        width: 100%;
+        width: 78%;
         object-fit: contain;
         z-index: 1;
+        margin-right: 1rem;
     }
 
     .overlay_circle {
