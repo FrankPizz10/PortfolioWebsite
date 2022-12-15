@@ -60,7 +60,7 @@
         padding: 1rem 2rem;
         border: var(--white-color);
         border-radius: 15px;
-        font-weight: 900;
+        font-weight: 400;
         flex-direction: row;
         width: auto;
 
@@ -186,6 +186,10 @@
     }
 
     @media screen and (max-width: 1200px) {
-        margin: 2rem 0;
+        height: 80%;
+         img {
+            width: 42%;
+            margin-right: 0;
+         }
     }
 }
