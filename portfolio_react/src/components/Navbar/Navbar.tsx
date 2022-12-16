@@ -15,6 +15,11 @@ const Navbar = () => {
         });
     }
 
+    const resumedropDown = () => {
+        setToggle(false);
+        scrollToTop();
+    }
+
     return (
         <nav className="app__navbar" style={{padding: useLocation().pathname === '/resume' ? '1.5rem 2rem' : ''}}>
             <div className="app__navbar-logo">
@@ -53,11 +58,16 @@ const Navbar = () => {
                         <ul>
                             {['home', 'about', 'skills', 'chess app', 'contact'].map((item) => (
                                 <li key={item}>
-                                    <a href={`#${item}`} onClick={() => setToggle(false)}>
+                                    <a href={item=='chess app' ? '#chessapp' : `#${item}`} onClick={() => setToggle(false)}>
                                         {item}
                                     </a>
                                 </li>
                             ))}
+                            <li>
+                                <NavLink to="/resume" onClick={resumedropDown}>
+                                    Resume
+                                </NavLink>
+                            </li>
                         </ul>
                     </motion.div>
                 )}
