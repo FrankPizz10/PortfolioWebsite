@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { Skills, Header, About, Resume } from "./container/";
+import { Skills, Header, About, Resume, ChessApp, Contact } from "./container/";
 import { Navbar } from "./components/";
 
 import "./App.scss";
@@ -15,6 +15,8 @@ const App = () => {
             <Header />
             <About />
             <Skills />
+            <ChessApp />
+            <Contact />
           </div>} />
       <Route path="/resume" element={
         <div className="app">
