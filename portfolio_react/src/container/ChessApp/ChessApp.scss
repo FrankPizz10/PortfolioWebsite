@@ -1,0 +1,58 @@
+#chessapp {
+    position: relative;
+    background: url('../../assets/bgIMG.png');
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center;
+
+    .app__wrapper {
+        padding: 0;
+
+        .copyright {
+            display: none;
+        }
+    }
+}
+
+.app__chessapp {
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+
+    h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    p {
+        padding-top: 1rem;
+    }
+
+    button {
+        padding: .5rem;
+        border-radius: 5px;
+        background-color: var(--white-color);
+        border: 1px solid var(--lightGray-color);
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--light-blue-color);
+            border-color: var(--light-blue-color);
+        }
+    }
+
+    img {
+        height: 300px;
+    }
+}
+
+.chessapp-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+}
