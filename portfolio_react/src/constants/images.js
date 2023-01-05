@@ -28,20 +28,10 @@ import about02 from '../assets/about02.png';
 import about03 from '../assets/about03.png';
 import about04 from '../assets/about04.png';
 
-import profile from '../assets/profile.png';
 import profile1 from '../assets/ProfilePic1.png';
 import profile2 from '../assets/ProfilePic2.png';
 import circle from '../assets/circle.svg';
-import logo from '../assets/logo.png';
 import frankTitle from '../assets/FrankTitle.png';
-
-import adidas from '../assets/adidas.png';
-import amazon from '../assets/amazon.png';
-import asus from '../assets/asus.png';
-import bolt from '../assets/bolt.png';
-import nb from '../assets/nb.png';
-import skype from '../assets/skype.png';
-import spotify from '../assets/spotify.png';
 
 import chessapp from '../assets/chessapp.png';
 
@@ -74,18 +64,9 @@ export default {
   about02,
   about03,
   about04,
-  profile,
   profile1,
   profile2,
   circle,
-  logo,
   frankTitle,
-  adidas,
-  amazon,
-  asus,
-  bolt,
-  nb,
-  skype,
-  spotify,
   chessapp,
 };

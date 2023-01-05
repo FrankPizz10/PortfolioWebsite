@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 import { AppWrap } from "../../wrapper";
-import { images } from "../../constants";
 import './About.scss';
 
 const About = () => {

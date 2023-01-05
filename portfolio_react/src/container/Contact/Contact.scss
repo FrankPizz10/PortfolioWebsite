@@ -1,0 +1,55 @@
+.app__contact {
+    flex-direction: column;
+}
+
+.app__contact-socials {
+    display: flex;
+
+    div {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--white-color);
+        margin: 1.5rem 0.3rem;
+        border: 1px solid var(--lightGray-color);
+    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        transition: all 0.3s ease-in-out;
+    
+        svg {
+          width: 25px;
+          height: 25px;
+          color: var(--gray-color);
+          margin-top: 5px;
+        }
+    
+        &:hover {
+          background-color: var(--light-blue-color);
+          border-color: var(--light-blue-color);
+    
+          svg {
+            color: var(--white-color);
+          }
+        }
+    
+        @media screen and (min-width: 2000px) {
+          width: 70px;
+          height: 70px;
+    
+          margin: 0.5rem 0;
+    
+          svg {
+            width: 30px;
+            height: 30px;
+          }
+        }
+    }
+}
+
+.app__contact-email {
+    font-size: 9;
+    margin: 1.5rem 0;
+}

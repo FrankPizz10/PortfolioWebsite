@@ -34,7 +34,7 @@ const Navbar = () => {
                             {['home', 'about', 'skills', 'chess app', 'contact'].map((item, index) => (
                                 <li className="app__flex p-text" key={`link-${item}`}>
                                     <div />
-                                    <a href={item=='chess app' ? '#chessapp' : `#${item}`}>{item}</a>
+                                    <a href={item==='chess app' ? '#chessapp' : `#${item}`}>{item}</a>
                                 </li>
                             ))}
                         </ul>
@@ -58,7 +58,7 @@ const Navbar = () => {
                         <ul>
                             {['home', 'about', 'skills', 'chess app', 'contact'].map((item) => (
                                 <li key={item}>
-                                    <a href={item=='chess app' ? '#chessapp' : `#${item}`} onClick={() => setToggle(false)}>
+                                    <a href={item==='chess app' ? '#chessapp' : `#${item}`} onClick={() => setToggle(false)}>
                                         {item}
                                     </a>
                                 </li>
