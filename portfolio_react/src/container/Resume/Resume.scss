@@ -1,0 +1,29 @@
+.app__resume {
+    flex-direction: column;
+    padding-top: 5rem;
+
+    > div {
+        max-width: 40%;
+
+        div {
+            margin: 1rem 0;
+        }
+    }
+
+    h1, h2, h3, h3, h4, h5, h6 {
+        margin: 0.5rem 0;
+
+        span {
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+    }
+
+    p {
+        margin: 0.2rem;
+    }
+}
+
+.core-skills {
+    font-weight: 800;
+}

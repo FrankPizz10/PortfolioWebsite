@@ -5,9 +5,9 @@ const NavigationDots: React.FC<{active: string}> = ({
 }) => {
     return (
         <div className="app__navigation">
-            {['home', 'about', 'projects', 'contact'].map((item, index) => (
+            {['home', 'about', 'skills', 'chess app', 'contact'].map((item, index) => (
                 <a 
-                href={`#${item}`}
+                href={item=='chess app' ? '#chessapp' : `#${item}`}
                 key={item + index}
                 className="app__navigation-dot"
                 style={active === item ? { backgroundColor: '#00ddff'} : {}}

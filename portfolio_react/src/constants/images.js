@@ -43,6 +43,8 @@ import nb from '../assets/nb.png';
 import skype from '../assets/skype.png';
 import spotify from '../assets/spotify.png';
 
+import chessapp from '../assets/chessapp.png';
+
 export default {
   email,
   mobile,
@@ -85,4 +87,5 @@ export default {
   nb,
   skype,
   spotify,
+  chessapp,
 };
