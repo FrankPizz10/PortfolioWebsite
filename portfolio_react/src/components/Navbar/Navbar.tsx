@@ -64,9 +64,7 @@ const Navbar = () => {
                                 </li>
                             ))}
                             <li>
-                                <NavLink to="/resume" onClick={resumedropDown}>
-                                    Resume
-                                </NavLink>
+                                <NavLink to="/resume" onClick={resumedropDown}>Resume</NavLink>
                             </li>
                         </ul>
                     </motion.div>
