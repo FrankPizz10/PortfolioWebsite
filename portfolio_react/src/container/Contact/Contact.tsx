@@ -21,7 +21,7 @@ const Contact = () => {
                 </div>
             </div>
             <div className="app__contact-email">
-                <p>pizzella.f@northeastern.edu</p>
+                <p>fpizz210@gmail.com</p>
             </div>
         </div>
     );

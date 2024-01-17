@@ -22,6 +22,8 @@ import androidstudio from '../assets/androidstudio.png';
 import java from '../assets/java.png';
 import sql from '../assets/sql.png';
 import csharp from '../assets/C#.png';
+import expo from '../assets/expo.png';
+import sitecore from '../assets/sitecore.png';
 
 import about01 from '../assets/about01.png';
 import about02 from '../assets/about02.png';
@@ -69,4 +71,6 @@ export default {
   circle,
   frankTitle,
   chessapp,
+  expo,
+  sitecore,
 };

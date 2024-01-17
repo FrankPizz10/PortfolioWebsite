@@ -51,6 +51,16 @@
     font-weight: 800;
 }
 
-.app__resume-education, .app__resume-experience {
+.app__resume-education, .app__resume-experience, .app__resume-skills {
     width: 100%;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.app__resume-certifications {
+    width: 100%;
+}
+
+.app__resume-download {
+    list-style: none;
+    font-size: large;
 }
