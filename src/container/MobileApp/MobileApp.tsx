@@ -11,7 +11,7 @@ const MobileApp = () => {
                 <h1>BeerPassport App</h1>
                 <p>I developed an IOS app that allows users to track tried and like beers, complete collections, and add friends.</p>
                 <div className="chessapp-img">
-                    <img src={images.mobileapp} alt="mobile app" />
+                    <img src={images.mobileapp} alt="home page of beer passport app" />
                 </div>
             </div>
             <div>

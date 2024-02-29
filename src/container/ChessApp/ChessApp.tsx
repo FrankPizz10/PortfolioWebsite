@@ -11,7 +11,7 @@ const ChessApp = () => {
                 <h1>Frank's Chess App</h1>
                 <p>This online two player chess app allows you to play a full game of chess with all rules enforced</p>
                 <div className="chessapp-img">
-                    <img src={images.chessapp} alt="chess app" />
+                    <img src={images.chessapp} alt="preview of chess app" />
                 </div>
             </div>
             <div>
