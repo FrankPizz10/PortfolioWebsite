@@ -65,7 +65,18 @@ const Resume = () => {
                 </div>
             </div>
             <div className='app__resume-skills'>
-            <h1>Technical Projects</h1>
+                <h1>Technical Projects</h1>
+                <div className="muscle-map">
+                    <h3>BeerPassport <span>Solo App Developer / June 2023 - Present</span></h3>
+                    <ul>
+                        <li><p>Utilized tech stack consisting of React Native, Node.js, Express, MySQL, Prisma, AWS, Docker</p></li>
+                        <li><p>Developed an engaging beer tracking app on the App Store, powered by a custom AWS server</p></li>
+                        <li><p>Created features enabling users to track tried beers, complete collections, and connect with friends</p></li>
+                        <li><p>Configured a VPC to include an ECS cluster, EFS storage, and an Application Load Balancer</p></li>
+                        <li><p>Implemented an admin frontend to continuously update the existing 5000 strong beer database</p></li>
+                        <li><p>Leveraged Firebase for frontend sign-in with server middleware to validate authentication tokens</p></li>
+                    </ul>
+                </div>
                 <div className="muscle-map">
                     <h3>Senior Capstone <span>HuskyCast Team Lead / January 2023 - May 2023</span></h3>
                     <ul>

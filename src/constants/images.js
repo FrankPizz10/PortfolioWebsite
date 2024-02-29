@@ -36,6 +36,7 @@ import circle from '../assets/circle.svg';
 import frankTitle from '../assets/FrankTitle.png';
 
 import chessapp from '../assets/chessapp.png';
+import mobileapp from '../assets/mobileapp.png';
 
 const images = {
   email,
@@ -71,6 +72,7 @@ const images = {
   circle,
   frankTitle,
   chessapp,
+  mobileapp,
   expo,
   sitecore,
 };

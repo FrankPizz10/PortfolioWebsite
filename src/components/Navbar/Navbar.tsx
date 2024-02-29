@@ -6,8 +6,22 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { images } from "../../constants";
 import './Navbar.scss';
 
+interface NavBarLinkMap {
+    [key: string]: string;
+}
+
 const Navbar = () => {
     const [toggle, setToggle] = useState(false);
+    const links = ['home', 'about', 'skills', 'mobile app', 'chess app', 'contact'];
+
+    const linksMap: NavBarLinkMap = {
+        'home': 'home',
+        'about': 'about',
+        'skills': 'skills',
+        'mobile app': 'mobileapp',
+        'chess app': 'chessapp',
+        'contact': 'contact',
+    }
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -31,10 +45,10 @@ const Navbar = () => {
                 useLocation().pathname !== '/resume' && (
                     <div className="app__navbar-links">
                         <ul>
-                            {['home', 'about', 'skills', 'chess app', 'contact'].map((item, index) => (
+                            {links.map((item, index) => (
                                 <li className="app__flex p-text" key={`link-${item}`}>
                                     <div />
-                                    <a href={item==='chess app' ? '#chessapp' : `#${item}`}>{item}</a>
+                                    <a href={`#${linksMap[item]}`}>{item}</a>
                                 </li>
                             ))}
                         </ul>
@@ -56,9 +70,9 @@ const Navbar = () => {
                     >
                         <HiX onClick={() => setToggle(false)}/>
                         <ul>
-                            {['home', 'about', 'skills', 'chess app', 'contact'].map((item) => (
+                            {links.map((item) => (
                                 <li key={item}>
-                                    <a href={item==='chess app' ? '#chessapp' : `#${item}`} onClick={() => setToggle(false)}>
+                                    <a href={`#${linksMap[item]}`} onClick={() => setToggle(false)}>
                                         {item}
                                     </a>
                                 </li>
