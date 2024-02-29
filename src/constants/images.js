@@ -37,7 +37,7 @@ import frankTitle from '../assets/FrankTitle.png';
 
 import chessapp from '../assets/chessapp.png';
 
-export default {
+const images = {
   email,
   mobile,
   api,
@@ -74,3 +74,6 @@ export default {
   expo,
   sitecore,
 };
+
+export default images;
+  

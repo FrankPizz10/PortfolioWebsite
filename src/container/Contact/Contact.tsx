@@ -7,7 +7,7 @@ import './Contact.scss';
 const Contact = () => {
     return(
         <div className="app__contact app__flex">
-            <h1 app_contact-title>Find Me On</h1>
+            <h1 className="app__contact-title">Find Me On</h1>
             <div className="app__contact-socials">
                 <div>
                     <a href='https://www.linkedin.com/in/frank-pizzella-8680461a0/'>
