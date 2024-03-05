@@ -3,7 +3,7 @@ import './Resume.scss';
 const Resume = () => {
     return(
         <div className="app__resume app__flex">
-            <a className="app__resume-download" href="https://frank-pizz-portfolio-website.s3.amazonaws.com/Frank_Pizzella_Resume_2024.pdf" download target="_blank" rel="noopener noreferrer">Download Resume PDF</a>
+            <a className="app__resume-download" href={process.env.REACT_APP_RESUME_URL} download target="_blank" rel="noopener noreferrer">Download Resume PDF</a>
             <div className="app__resume-education">
                 <h1>Education</h1>
                 <ul>
