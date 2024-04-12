@@ -18,12 +18,12 @@ const MobileApp = () => {
             <div className="app__downloadButtons">
                 <div className="app__downloadButton">
                     <a href="https://apps.apple.com/us/app/beerpassport/id6476255138">
-                        <button>Download Android <DiAndroid /></button>
+                        <button>Download Apple <DiApple /></button>
                     </a>
                 </div>
                 <div className="app__downloadButton">
                     <a href={process.env.REACT_APP_ANDROID_APK} download target="_blank" rel="noopener noreferrer">
-                        <button>Download Apple <DiApple /></button>
+                        <button>Download Android <DiAndroid /></button>
                     </a>
                 </div>
             </div>
