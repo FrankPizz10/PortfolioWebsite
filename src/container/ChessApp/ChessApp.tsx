@@ -1,26 +1,51 @@
 import React from "react";
+import { motion } from "framer-motion";
+import { HiPlay } from "react-icons/hi";
 
-import { AppWrap } from "../../wrapper";
 import { images } from "../../constants";
-import './ChessApp.scss';
+
+const TECH = ["React", "Socket.IO", "Node.js", "PostgreSQL"];
 
 const ChessApp = () => {
-    return(
-        <div className="app__chessapp app__flex">
-            <div>
-                <h1>Frank's Chess App</h1>
-                <p>This online two player chess app allows you to play a full game of chess with all rules enforced</p>
-                <div className="chessapp-img">
-                    <img src={images.chessapp} alt="preview of chess app" />
-                </div>
-            </div>
-            <div>
-                <a href="https://chess.frankpizzella.com">
-                    <button>Play Now</button>
-                </a>
-            </div>
+  return (
+    <motion.article
+      className="mission glass-card"
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="mission__media">
+        <img src={images.chessapp} alt="Online chess app preview" loading="lazy" />
+        <span className="mission__status">
+          <span className="pulse-dot" /> playable now
+        </span>
+      </div>
+      <div className="mission__body">
+        <span className="mission__code">mission 02</span>
+        <h3 className="mission__title">Realtime Chess</h3>
+        <p className="mission__desc">
+          A two-player online chess app with every rule of the game enforced —
+          real-time moves over WebSockets in a clean, focused board UI.
+        </p>
+        <ul className="mission__tech">
+          {TECH.map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ul>
+        <div className="mission__actions">
+          <a
+            href="https://chess.frankpizzella.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary mission__btn"
+          >
+            <HiPlay /> Play now
+          </a>
         </div>
-    );
+      </div>
+    </motion.article>
+  );
 };
 
-export default AppWrap(ChessApp, 'chessapp');
+export default ChessApp;
