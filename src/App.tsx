@@ -1,11 +1,20 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { Skills, Header, About, Resume, MobileApp, ChessApp, Contact } from "./container/";
 import { Navbar } from "./components/";
 import Starfield from "./components/Starfield";
 
 import "./App.scss";
+
+/** Reset scroll on every route change so the résumé page always opens at the top. */
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 const Cosmos = () => (
   <div className="cosmos" aria-hidden="true">
@@ -41,7 +50,9 @@ const Missions = () => (
 
 const App = () => {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route
         path="/"
         element={
@@ -72,7 +83,8 @@ const App = () => {
           </div>
         }
       />
-    </Routes>
+      </Routes>
+    </>
   );
 };
 

@@ -10,16 +10,72 @@ interface Star {
   drift: number;
 }
 
-interface Meteor {
+type StreakKind = "star" | "comet" | "meteor";
+
+interface Streak {
   x: number;
   y: number;
   vx: number;
   vy: number;
   life: number;
   maxLife: number;
+  kind: StreakKind;
 }
 
-/** Twinkling starfield with occasional shooting stars, on a fixed full-viewport canvas. */
+interface StreakStyle {
+  width: number;
+  trail: number;
+  stops: ReadonlyArray<readonly [number, string, number]>;
+  head: number;
+  headColor: string;
+  headAlpha: number;
+  halo?: number;
+}
+
+const STREAK_STYLES: Record<StreakKind, StreakStyle> = {
+  // classic shooting star: thin, quick, white-hot with a short pale trail
+  star: {
+    width: 1.6,
+    trail: 9,
+    stops: [
+      [0, "255, 253, 248", 0.95],
+      [0.4, "214, 231, 255", 0.5],
+      [1, "150, 200, 255", 0],
+    ],
+    head: 1.8,
+    headColor: "255, 255, 255",
+    headAlpha: 0.9,
+  },
+  // comet: slow and graceful, glowing coma, long wide ice-blue tail
+  comet: {
+    width: 3.2,
+    trail: 24,
+    stops: [
+      [0, "240, 250, 255", 0.9],
+      [0.35, "158, 205, 255", 0.55],
+      [1, "110, 168, 254", 0],
+    ],
+    head: 4.5,
+    headColor: "190, 220, 255",
+    headAlpha: 0.5,
+    halo: 2.6,
+  },
+  // meteor: fast and fiery, flickering warm trail
+  meteor: {
+    width: 2.4,
+    trail: 13,
+    stops: [
+      [0, "255, 252, 246", 0.95],
+      [0.35, "255, 183, 120", 0.6],
+      [1, "255, 122, 89", 0],
+    ],
+    head: 2.4,
+    headColor: "255, 240, 220",
+    headAlpha: 0.85,
+  },
+};
+
+/** Twinkling starfield with shooting stars, comets and meteors on a fixed full-viewport canvas. */
 const Starfield = () => {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -31,8 +87,8 @@ const Starfield = () => {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let stars: Star[] = [];
-    let meteors: Meteor[] = [];
-    let nextMeteorAt = 1200;
+    let streaks: Streak[] = [];
+    let nextStreakAt = 1200;
     let raf = 0;
     let w = 0;
     let h = 0;
@@ -54,60 +110,81 @@ const Starfield = () => {
         phase: Math.random() * Math.PI * 2,
         drift: Math.random() * 0.12 + 0.02,
       }));
-      meteors = [];
+      streaks = [];
     };
 
-    const spawnMeteor = () => {
+    const spawnStreak = () => {
+      const roll = Math.random();
+      const kind: StreakKind = roll < 0.4 ? "star" : roll < 0.7 ? "comet" : "meteor";
       const fromLeft = Math.random() < 0.5;
-      const speed = 7 + Math.random() * 5;
       const angle = ((26 + Math.random() * 16) * Math.PI) / 180;
-      meteors.push({
+      let speed: number;
+      let maxLife: number;
+      if (kind === "star") {
+        speed = 8 + Math.random() * 4;
+        maxLife = 55 + Math.random() * 20;
+      } else if (kind === "comet") {
+        speed = 3.5 + Math.random() * 2;
+        maxLife = 110 + Math.random() * 50;
+      } else {
+        speed = 10 + Math.random() * 5;
+        maxLife = 45 + Math.random() * 20;
+      }
+      streaks.push({
         x: fromLeft ? -80 : w + 80,
         y: Math.random() * h * 0.45,
         vx: Math.cos(angle) * speed * (fromLeft ? 1 : -1),
         vy: Math.sin(angle) * speed,
         life: 0,
-        maxLife: 80 + Math.random() * 40,
+        maxLife,
+        kind,
       });
     };
 
-    const drawMeteors = (t: number) => {
+    const drawStreaks = (t: number) => {
       if (reduced) return;
-      if (t > nextMeteorAt) {
-        spawnMeteor();
-        nextMeteorAt = t + 2800 + Math.random() * 5200;
+      if (t > nextStreakAt) {
+        spawnStreak();
+        nextStreakAt = t + 2200 + Math.random() * 3800;
       }
-      meteors = meteors.filter(
-        (m) => m.life < m.maxLife && m.x > -320 && m.x < w + 320 && m.y < h + 320
+      streaks = streaks.filter(
+        (s) => s.life < s.maxLife && s.x > -340 && s.x < w + 340 && s.y < h + 340
       );
-      for (const m of meteors) {
-        m.x += m.vx;
-        m.y += m.vy;
-        m.life += 1;
-        const fadeIn = Math.min(1, m.life / 10);
-        const fadeOut = Math.min(1, (m.maxLife - m.life) / 28);
-        const a = Math.max(0, Math.min(fadeIn, fadeOut));
+      for (const s of streaks) {
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life += 1;
+        const fadeIn = Math.min(1, s.life / 10);
+        const fadeOut = Math.min(1, (s.maxLife - s.life) / 30);
+        let a = Math.max(0, Math.min(fadeIn, fadeOut));
         if (a <= 0) continue;
-        // faint warm trail behind the head
-        const trail = 13;
-        const tx = m.x - m.vx * trail;
-        const ty = m.y - m.vy * trail;
-        const grad = ctx.createLinearGradient(m.x, m.y, tx, ty);
-        grad.addColorStop(0, `rgba(255, 252, 246, ${(0.95 * a).toFixed(3)})`);
-        grad.addColorStop(0.35, `rgba(255, 183, 120, ${(0.55 * a).toFixed(3)})`);
-        grad.addColorStop(1, "rgba(255, 122, 89, 0)");
+        if (s.kind === "meteor") a *= 0.72 + 0.28 * Math.sin(s.life * 1.7);
+        const style = STREAK_STYLES[s.kind];
+        const tx = s.x - s.vx * style.trail;
+        const ty = s.y - s.vy * style.trail;
+        const grad = ctx.createLinearGradient(s.x, s.y, tx, ty);
+        for (const [offset, rgb, alpha] of style.stops) {
+          grad.addColorStop(offset, `rgba(${rgb}, ${(alpha * a).toFixed(3)})`);
+        }
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = style.width;
         ctx.lineCap = "round";
         ctx.beginPath();
-        ctx.moveTo(m.x, m.y);
+        ctx.moveTo(s.x, s.y);
         ctx.lineTo(tx, ty);
         ctx.stroke();
         // glowing head
         ctx.beginPath();
-        ctx.arc(m.x, m.y, 2.4, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 240, 220, ${(0.85 * a).toFixed(3)})`;
+        ctx.arc(s.x, s.y, style.head, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${style.headColor}, ${(style.headAlpha * a).toFixed(3)})`;
         ctx.fill();
+        // comet coma: soft halo around the head
+        if (style.halo) {
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, style.head * style.halo, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(140, 190, 255, ${(0.12 * a).toFixed(3)})`;
+          ctx.fill();
+        }
       }
     };
 
@@ -135,7 +212,7 @@ const Starfield = () => {
           ctx.fill();
         }
       }
-      drawMeteors(t);
+      drawStreaks(t);
       if (!reduced) raf = requestAnimationFrame(draw);
     };
 

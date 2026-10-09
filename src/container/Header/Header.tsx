@@ -68,9 +68,9 @@ const Header = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-          <span>40.64° N, 74.07° W</span>
+          <span className="coord">40.64° N, 74.07° W</span>
           <span className="sep">·</span>
-          <span>staten island, ny</span>
+          <span className="locale">staten island, ny</span>
         </motion.div>
       </div>
 

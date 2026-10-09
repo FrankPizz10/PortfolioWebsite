@@ -93,6 +93,21 @@
   }
 }
 
+/* streaker accent per section: starlight / comet / meteor */
+.about .section-kicker::before {
+  background: linear-gradient(90deg, var(--starlight), transparent);
+}
+.skills .section-kicker::before,
+.resume .section-kicker::before {
+  background: linear-gradient(90deg, var(--comet), transparent);
+}
+#missions .section-kicker::before {
+  background: linear-gradient(90deg, var(--meteor), transparent);
+}
+.contact .section-kicker::before {
+  background: linear-gradient(90deg, var(--nebula-violet), transparent);
+}
+
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 4.6vw, 3.1rem);
