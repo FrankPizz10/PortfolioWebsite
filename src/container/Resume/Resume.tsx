@@ -16,7 +16,7 @@ const EXPERIENCE: Entry[] = [
   {
     company: "Robert Wood Johnson Foundation",
     role: "Software Engineer Contractor",
-    dates: "Feb 2025 — Present",
+    dates: "Feb 2026 — Present",
     current: true,
     bullets: [
       "Develop and maintain software solutions supporting investment operations for a $14B portfolio",
