@@ -25,6 +25,17 @@ import csharp from '../assets/C#.png';
 import expo from '../assets/expo.png';
 import sitecore from '../assets/sitecore.png';
 
+import typescriptIcon from '../assets/icons/typescript.svg';
+import reactIcon from '../assets/icons/react.svg';
+import csharpIcon from '../assets/icons/csharp.svg';
+import pythonIcon from '../assets/icons/python.svg';
+import mysqlIcon from '../assets/icons/mysql.svg';
+import graphqlIcon from '../assets/icons/graphql.svg';
+import nodejsIcon from '../assets/icons/nodejs.svg';
+import awsIcon from '../assets/icons/aws.svg';
+import javaIcon from '../assets/icons/java.svg';
+import sitecoreIcon from '../assets/icons/sitecore.svg';
+
 import about01 from '../assets/about01.png';
 import about02 from '../assets/about02.png';
 import about03 from '../assets/about03.png';
@@ -75,6 +86,16 @@ const images = {
   mobileapp,
   expo,
   sitecore,
+  typescriptIcon,
+  reactIcon,
+  csharpIcon,
+  pythonIcon,
+  mysqlIcon,
+  graphqlIcon,
+  nodejsIcon,
+  awsIcon,
+  javaIcon,
+  sitecoreIcon,
 };
 
 export default images;

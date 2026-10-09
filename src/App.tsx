@@ -26,7 +26,7 @@ const Missions = () => (
   <section id="missions" className="section">
     <span className="section-kicker">03 // Missions</span>
     <h2 className="section-title">
-      Things I&apos;ve <span className="grad">launched</span>
+      Things I&apos;ve launched
     </h2>
     <p className="section-lede">
       Side projects that escaped the lab — a social beer-tracking app live on the

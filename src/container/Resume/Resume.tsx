@@ -89,7 +89,7 @@ const Resume = () => {
     <div className="resume section">
       <span className="section-kicker">Mission log</span>
       <h1 className="section-title">
-        Résu<span className="grad">mé</span>
+        Résumé
       </h1>
       <p className="section-lede">
         Every role, co-op, and launch — the full flight record.

@@ -42,13 +42,11 @@
   letter-spacing: -0.03em;
   line-height: 1.02;
   margin-bottom: 1.4rem;
-
-  .grad {
-    background: linear-gradient(94deg, var(--nebula-cyan) 10%, #7dd3fc 45%, var(--nebula-violet) 90%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
+  background: linear-gradient(94deg, var(--nebula-cyan) 10%, #7dd3fc 45%, var(--nebula-violet) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  width: fit-content;
 }
 
 .hero__role {

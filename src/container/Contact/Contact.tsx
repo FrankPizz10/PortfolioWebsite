@@ -11,7 +11,7 @@ const Contact = () => {
     <div className="contact">
       <span className="section-kicker">04 // Contact</span>
       <h2 className="section-title">
-        Open a <span className="grad">channel</span>
+        Open a channel
       </h2>
       <p className="section-lede">
         Whether it&apos;s a role, a collaboration, or just good old-fashioned

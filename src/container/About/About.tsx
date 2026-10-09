@@ -16,7 +16,7 @@ const About = () => {
     <div className="about">
       <span className="section-kicker">01 // About</span>
       <h2 className="section-title">
-        The engineer behind <span className="grad">the code</span>
+        The engineer behind the code
       </h2>
 
       <div className="about__grid">

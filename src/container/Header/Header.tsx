@@ -10,9 +10,9 @@ import "./Header.scss";
 const spring = { type: "spring", stiffness: 90, damping: 16 } as const;
 
 const ORBITERS = [
-  { src: images.react1, alt: "React", className: "orbiter-a" },
-  { src: images.typescript, alt: "TypeScript", className: "orbiter-b" },
-  { src: images.node, alt: "Node.js", className: "orbiter-c" },
+  { src: images.reactIcon, alt: "React", className: "orbiter-a" },
+  { src: images.awsIcon, alt: "AWS", className: "orbiter-b" },
+  { src: images.nodejsIcon, alt: "Node.js", className: "orbiter-c" },
 ];
 
 const Header = () => {
@@ -34,7 +34,7 @@ const Header = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...spring, delay: 0.15 }}
         >
-          Frank <span className="grad">Pizzella</span>
+          Frank Pizzella
         </motion.h1>
 
         <motion.p
