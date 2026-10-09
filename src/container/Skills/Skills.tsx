@@ -22,6 +22,8 @@ const skills: Skill[] = [
     {title: 'Java', descripton: 'For: Android Development', imgUrl: images.java, alt: 'java logo'},
     {title: 'Python', descripton: 'For: Data Processing and Machine Learning', imgUrl: images.python, alt: 'python logo'},
     {title: 'SQL', descripton: 'For: Database Management', imgUrl: images.sql, alt: 'sql logo'},
+    {title: 'GraphQL', descripton: 'For: API Development', imgUrl: images.graphql, alt: 'graphql logo'},
+    {title: 'Node.js', descripton: 'For: Backend Development', imgUrl: images.node, alt: 'node logo'},
     {title: 'Sitecore', descripton: 'For: CMS and Web Development', imgUrl: images.sitecore, alt: 'sitecore logo', additional: 'Sitecore 10 Certified', additionalStyles: {'fontWeight': 'bold'}},
 ]
 

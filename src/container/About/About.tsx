@@ -18,8 +18,8 @@ const About = () => {
                             <div className="app__flex">
                                 <h2>A Little About Me</h2>
                             </div>
-                            <p>I am currently a Web Developer for the City of Cambridge, MA</p>
-                            <p>Follow this link to see my work <a href="https://www.cambridgema.gov" target="_blank" rel="noopener noreferrer">City of Cambridge Website</a></p>
+                            <p>I am currently a Software Engineer Contractor at the Robert Wood Johnson Foundation</p>
+                            <p>Previously a Web Developer for the City of Cambridge, MA — see my work <a href="https://www.cambridgema.gov" target="_blank" rel="noopener noreferrer">City of Cambridge Website</a></p>
                             <p>I am originally from Staten Island, New York</p>
                             <p>I graduated Northeastern University in Spring 2023</p>
                             <p>I majored in Computer Engineering and Computer Science</p>
