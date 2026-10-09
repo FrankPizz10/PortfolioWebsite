@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 
 interface Star {
@@ -52,7 +51,7 @@ const STREAK_STYLES: Record<StreakKind, StreakStyle> = {
     headColor: "255, 255, 245",
     headAlpha: 1,
     spikeLength: 8,
-    spikeWidth: 1.2,
+    spikeWidth: 1.3,
     spikeColor: "255, 255, 240",
     diagonalSpikes: true,
   },
@@ -126,10 +125,7 @@ function drawDiffractionSpikes(
   ctx.lineCap = "round";
 
   const glowRadius = length * 0.85;
-  const glow = ctx.createRadialGradient(
-    x, y, 0,
-    x, y, glowRadius
-  );
+  const glow = ctx.createRadialGradient(x, y, 0, x, y, glowRadius);
 
   glow.addColorStop(
     0,
@@ -183,14 +179,8 @@ function drawDiffractionSpikes(
     gradient.addColorStop(1, `rgba(${color}, 0)`);
 
     ctx.beginPath();
-    ctx.moveTo(
-      x - dx * innerLength,
-      y - dy * innerLength
-    );
-    ctx.lineTo(
-      x + dx * length,
-      y + dy * length
-    );
+    ctx.moveTo(x - dx * innerLength, y - dy * innerLength);
+    ctx.lineTo(x + dx * length, y + dy * length);
 
     ctx.strokeStyle = gradient;
     ctx.lineWidth = width;
@@ -227,14 +217,8 @@ function drawDiffractionSpikes(
       gradient.addColorStop(1, `rgba(${color}, 0)`);
 
       ctx.beginPath();
-      ctx.moveTo(
-        x - dx * coreRadius,
-        y - dy * coreRadius
-      );
-      ctx.lineTo(
-        x + dx * diagonalLength,
-        y + dy * diagonalLength
-      );
+      ctx.moveTo(x - dx * coreRadius, y - dy * coreRadius);
+      ctx.lineTo(x + dx * diagonalLength, y + dy * diagonalLength);
 
       ctx.strokeStyle = gradient;
       ctx.lineWidth = diagonalWidth;
@@ -245,10 +229,7 @@ function drawDiffractionSpikes(
   ctx.restore();
 }
 
-/**
- * Draw a soft, elongated colored glow around a comet or meteor.
- * The glow is widest around the head and fades smoothly outward.
- */
+/** Draw a soft, elongated colored glow around a comet or meteor. */
 function drawAtmosphericGlow(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -267,19 +248,19 @@ function drawAtmosphericGlow(
 
   const speed = Math.hypot(vx, vy) || 1;
 
-  // Unit vector pointing backward along the object's trail.
   const backX = -vx / speed;
   const backY = -vy / speed;
 
   const sideX = -backY;
   const sideY = backX;
 
-  const length = (kind === "comet" ? 43 : 30) *
-    (desktop ? 1.35 : 1.0);
+  // Longer atmospheric tails on smaller screens.
+  const length =
+    (kind === "comet" ? 43 : 40) *
+    (desktop ? 1.35 : 1.5);
 
   const width = kind === "comet" ? 15 : 13;
 
-  // Several overlapping translucent bubbles create depth.
   const layers =
     kind === "comet"
       ? [
@@ -333,9 +314,7 @@ function drawAtmosphericGlow(
     const tailX = x + backX * layer.length;
     const tailY = y + backY * layer.length;
 
-    const gradient = ctx.createLinearGradient(
-      x, y, tailX, tailY
-    );
+    const gradient = ctx.createLinearGradient(x, y, tailX, tailY);
 
     gradient.addColorStop(
       0,
@@ -351,7 +330,6 @@ function drawAtmosphericGlow(
     );
     gradient.addColorStop(1, `rgba(${layer.color}, 0)`);
 
-    // Build a tapered ribbon along the trail with a curved outline.
     const startWidth = layer.radius;
     const endWidth = layer.radius * 0.12;
 
@@ -362,10 +340,14 @@ function drawAtmosphericGlow(
     );
 
     ctx.bezierCurveTo(
-      x + backX * layer.length * 0.25 + sideX * startWidth * 0.9,
-      y + backY * layer.length * 0.25 + sideY * startWidth * 0.9,
-      tailX - backX * layer.length * 0.15 + sideX * endWidth,
-      tailY - backY * layer.length * 0.15 + sideY * endWidth,
+      x + backX * layer.length * 0.25 +
+        sideX * startWidth * 0.9,
+      y + backY * layer.length * 0.25 +
+        sideY * startWidth * 0.9,
+      tailX - backX * layer.length * 0.15 +
+        sideX * endWidth,
+      tailY - backY * layer.length * 0.15 +
+        sideY * endWidth,
       tailX + sideX * endWidth,
       tailY + sideY * endWidth
     );
@@ -376,10 +358,14 @@ function drawAtmosphericGlow(
     );
 
     ctx.bezierCurveTo(
-      tailX - backX * layer.length * 0.15 - sideX * endWidth,
-      tailY - backY * layer.length * 0.15 - sideY * endWidth,
-      x + backX * layer.length * 0.25 - sideX * startWidth * 0.9,
-      y + backY * layer.length * 0.25 - sideY * startWidth * 0.9,
+      tailX - backX * layer.length * 0.15 -
+        sideX * endWidth,
+      tailY - backY * layer.length * 0.15 -
+        sideY * endWidth,
+      x + backX * layer.length * 0.25 -
+        sideX * startWidth * 0.9,
+      y + backY * layer.length * 0.25 -
+        sideY * startWidth * 0.9,
       x - sideX * startWidth,
       y - sideY * startWidth
     );
@@ -389,13 +375,16 @@ function drawAtmosphericGlow(
     ctx.fill();
   }
 
-  // Radial bloom around the head.
   const headGlowRadius =
     headRadius * (kind === "comet" ? 5.5 : 6);
 
   const headGlow = ctx.createRadialGradient(
-    x, y, headRadius * 0.15,
-    x, y, headGlowRadius
+    x,
+    y,
+    headRadius * 0.15,
+    x,
+    y,
+    headGlowRadius
   );
 
   if (kind === "comet") {
@@ -597,13 +586,14 @@ const Starfield = () => {
         }
 
         const style = STREAK_STYLES[s.kind];
-        const trailMultiplier = desktop ? 2.2 : 1.2;
+
+        // Longer trails on mobile while preserving desktop styling.
+        const trailMultiplier = desktop ? 2.2 : 2.0;
         const trailLength = style.trail * trailMultiplier;
 
         const tx = s.x - s.vx * trailLength;
         const ty = s.y - s.vy * trailLength;
 
-        // Draw the tapered colored bloom behind comets and meteors.
         if (s.kind === "comet" || s.kind === "meteor") {
           drawAtmosphericGlow(
             ctx,
@@ -618,7 +608,7 @@ const Starfield = () => {
           );
         }
 
-        // Existing luminous trail.
+        // Luminous tapered trail.
         const grad = ctx.createLinearGradient(
           s.x,
           s.y,
