@@ -87,12 +87,12 @@ const EXPERIENCE: Entry[] = [
 const Resume = () => {
   return (
     <div className="resume section">
-      <span className="section-kicker">Mission log</span>
+      <span className="section-kicker">Career</span>
       <h1 className="section-title">
         Résumé
       </h1>
       <p className="section-lede">
-        Every role, co-op, and launch — the full flight record.
+        Every role, co-op, and project.
       </p>
 
       <motion.a

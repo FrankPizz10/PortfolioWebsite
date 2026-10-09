@@ -8,7 +8,7 @@ import "./Navbar.scss";
 const LINKS: Array<{ label: string; href: string }> = [
   { label: "About", href: "#about" },
   { label: "Stack", href: "#skills" },
-  { label: "Missions", href: "#missions" },
+  { label: "Projects", href: "#missions" },
   { label: "Contact", href: "#contact" },
 ];
 

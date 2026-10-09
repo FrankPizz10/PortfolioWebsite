@@ -25,7 +25,7 @@ const Header = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...spring, delay: 0.05 }}
         >
-          <span className="prompt">&gt;</span> hello world — i am
+          <span className="prompt">&gt;</span> Software engineer · Builder · Problem solver
         </motion.p>
 
         <motion.h1

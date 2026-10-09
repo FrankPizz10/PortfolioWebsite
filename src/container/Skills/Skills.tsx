@@ -37,7 +37,7 @@ const Skills = () => {
     <div className="skills">
       <span className="section-kicker">02 // Tech stack</span>
       <h2 className="section-title">
-        Tools I reach for
+        Tools & Technologies
       </h2>
       <p className="section-lede">
         The languages and platforms I&apos;ve shipped real software with — from

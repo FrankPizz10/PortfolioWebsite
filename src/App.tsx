@@ -33,7 +33,7 @@ const Footer = () => (
 
 const Missions = () => (
   <section id="missions" className="section">
-    <span className="section-kicker">03 // Missions</span>
+    <span className="section-kicker">03 // Projects</span>
     <h2 className="section-title">
       Things I&apos;ve launched
     </h2>

@@ -3,9 +3,9 @@ import React from "react";
 import { AppWrap } from "../../wrapper";
 import "./About.scss";
 
-const TELEMETRY: Array<{ label: string; value: string }> = [
-  { label: "current orbit", value: "Software Engineer Contractor — RWJF" },
-  { label: "previous vector", value: "Web Developer — City of Cambridge, MA" },
+const EXPERIENCE: Array<{ label: string; value: string }> = [
+  { label: "current role", value: "Software Engineer Contractor — RWJF" },
+  { label: "previous tenure", value: "Web Developer — City of Cambridge, MA" },
   { label: "origin", value: "Staten Island, New York" },
   { label: "education", value: "Northeastern Univ. — B.S. CE + CS, '23" },
   { label: "study abroad", value: "N.U.in Program — Univ. College Dublin" },
@@ -53,10 +53,10 @@ const About = () => {
             <span className="telemetry__dot" />
             <span className="telemetry__dot" />
             <span className="telemetry__dot" />
-            <span className="telemetry__title">telemetry</span>
+            <span className="telemetry__title">experience</span>
           </div>
           <dl>
-            {TELEMETRY.map((row) => (
+            {EXPERIENCE.map((row) => (
               <div key={row.label} className="telemetry__row">
                 <dt>{row.label}</dt>
                 <dd>{row.value}</dd>
