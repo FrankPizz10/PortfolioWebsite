@@ -250,104 +250,97 @@ function drawAtmosphericGlow(
   const sideX = -backY;
   const sideY = backX;
 
+  // A narrow, elongated teardrop: rounded and oval around the head, with
+  // both sides tapering smoothly into one soft tail point.
   const length =
-    (kind === "comet" ? 72 : 54) *
-    (desktop ? 1.5 : 1.9) *
+    (kind === "comet" ? 76 : 58) *
+    (desktop ? 1.35 : 1.55) *
     depthScale;
-  const width = (kind === "comet" ? 17 : 15) * depthScale;
-
-  // Broad, low-opacity outer glow plus a softer inner glow. The blur makes
-  // the layers merge together instead of showing separate opacity bands.
-  const layers =
-    kind === "comet"
-      ? [
-          { length: length, radius: width * 1.25, color: "65, 145, 255", alpha: 0.045, blur: 10 },
-          { length: length * 0.76, radius: width * 0.9, color: "90, 190, 255", alpha: 0.065, blur: 7 },
-          { length: length * 0.48, radius: width * 0.58, color: "175, 230, 255", alpha: 0.075, blur: 4 },
-        ]
-      : [
-          { length: length, radius: width * 1.3, color: "220, 35, 25", alpha: 0.045, blur: 10 },
-          { length: length * 0.78, radius: width * 0.92, color: "255, 75, 25", alpha: 0.065, blur: 7 },
-          { length: length * 0.5, radius: width * 0.6, color: "255, 165, 55", alpha: 0.08, blur: 4 },
-        ];
-
-  for (const layer of layers) {
-    const tailX = x + backX * layer.length;
-    const tailY = y + backY * layer.length;
-    const gradient = ctx.createLinearGradient(x, y, tailX, tailY);
-
-    // More gradient stops produce a gradual fade along the whole tail.
-    gradient.addColorStop(0, `rgba(${layer.color}, ${(layer.alpha * alpha).toFixed(3)})`);
-    gradient.addColorStop(0.16, `rgba(${layer.color}, ${(layer.alpha * alpha * 0.92).toFixed(3)})`);
-    gradient.addColorStop(0.38, `rgba(${layer.color}, ${(layer.alpha * alpha * 0.68).toFixed(3)})`);
-    gradient.addColorStop(0.62, `rgba(${layer.color}, ${(layer.alpha * alpha * 0.38).toFixed(3)})`);
-    gradient.addColorStop(0.82, `rgba(${layer.color}, ${(layer.alpha * alpha * 0.14).toFixed(3)})`);
-    gradient.addColorStop(1, `rgba(${layer.color}, 0)`);
-
-    const startWidth = layer.radius;
-    const endWidth = layer.radius * 0.06;
-
-    ctx.save();
-    ctx.filter = `blur(${layer.blur * depthScale}px)`;
-    ctx.beginPath();
-    ctx.moveTo(x + sideX * startWidth, y + sideY * startWidth);
-    ctx.bezierCurveTo(
-      x + backX * layer.length * 0.28 + sideX * startWidth * 0.9,
-      y + backY * layer.length * 0.28 + sideY * startWidth * 0.9,
-      tailX - backX * layer.length * 0.12 + sideX * endWidth,
-      tailY - backY * layer.length * 0.12 + sideY * endWidth,
-      tailX + sideX * endWidth,
-      tailY + sideY * endWidth
-    );
-    ctx.lineTo(tailX - sideX * endWidth, tailY - sideY * endWidth);
-    ctx.bezierCurveTo(
-      tailX - backX * layer.length * 0.12 - sideX * endWidth,
-      tailY - backY * layer.length * 0.12 - sideY * endWidth,
-      x + backX * layer.length * 0.28 - sideX * startWidth * 0.9,
-      y + backY * layer.length * 0.28 - sideY * startWidth * 0.9,
-      x - sideX * startWidth,
-      y - sideY * startWidth
-    );
-    ctx.closePath();
-    ctx.fillStyle = gradient;
-    ctx.fill();
-    ctx.restore();
-  }
-
-  // A single, smoothly feathered head glow avoids a second visible halo ring.
-  const headGlowRadius = headRadius * (kind === "comet" ? 7.2 : 7.5);
-  const innerRadius = Math.max(0.1, headRadius * 0.12);
-  const headGlow = ctx.createRadialGradient(
-    x, y, innerRadius,
-    x, y, headGlowRadius
-  );
+  const width = (kind === "comet" ? 6.2 : 5.2) * depthScale;
+  const tailX = x + backX * length;
+  const tailY = y + backY * length;
+  const tailGradient = ctx.createLinearGradient(x, y, tailX, tailY);
 
   if (kind === "comet") {
-    headGlow.addColorStop(0, `rgba(240, 255, 255, ${(0.34 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.08, `rgba(205, 242, 255, ${(0.29 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.2, `rgba(145, 215, 255, ${(0.2 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.38, `rgba(90, 175, 255, ${(0.11 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.58, `rgba(65, 140, 245, ${(0.055 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.78, `rgba(45, 105, 220, ${(0.018 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(1, "rgba(35, 100, 220, 0)");
+    tailGradient.addColorStop(0, `rgba(235, 252, 255, ${(0.23 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(0.12, `rgba(190, 238, 255, ${(0.2 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(0.3, `rgba(125, 210, 255, ${(0.14 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(0.52, `rgba(75, 165, 250, ${(0.075 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(0.76, `rgba(55, 125, 230, ${(0.028 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(1, "rgba(35, 80, 175, 0)");
   } else {
-    headGlow.addColorStop(0, `rgba(255, 255, 225, ${(0.4 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.08, `rgba(255, 220, 130, ${(0.32 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.2, `rgba(255, 155, 65, ${(0.22 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.38, `rgba(255, 90, 35, ${(0.12 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.58, `rgba(225, 45, 25, ${(0.055 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(0.8, `rgba(185, 25, 25, ${(0.018 * alpha).toFixed(3)})`);
-    headGlow.addColorStop(1, "rgba(150, 15, 20, 0)");
+    tailGradient.addColorStop(0, `rgba(255, 255, 220, ${(0.26 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(0.12, `rgba(255, 220, 125, ${(0.21 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(0.3, `rgba(255, 155, 60, ${(0.145 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(0.53, `rgba(255, 95, 35, ${(0.07 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(0.77, `rgba(225, 50, 28, ${(0.025 * alpha).toFixed(3)})`);
+    tailGradient.addColorStop(1, "rgba(150, 20, 25, 0)");
   }
 
-  ctx.save();
-  ctx.filter = `blur(${3.5 * depthScale}px)`;
+  // The front is a rounded oval, swelling slightly just behind the nucleus.
+  // The rear contour mirrors the same curve so the glow cannot form a flat edge.
+  const point = (along: number, across: number) => ({
+    x: x + backX * along + sideX * across,
+    y: y + backY * along + sideY * across,
+  });
+  const p0 = point(-headRadius * 0.45, -width * 0.5);
+  const p1 = point(length * 0.13, -width * 1.05);
+  const p2 = point(length * 0.3, -width * 0.88);
+  const p3 = point(length * 0.58, -width * 0.38);
+  const tip = point(length, 0);
+  const p4 = point(length * 0.58, width * 0.38);
+  const p5 = point(length * 0.3, width * 0.88);
+  const p6 = point(length * 0.13, width * 1.05);
+  const p7 = point(-headRadius * 0.45, width * 0.5);
+
   ctx.beginPath();
-  ctx.arc(x, y, headGlowRadius, 0, Math.PI * 2);
+  ctx.moveTo(p0.x, p0.y);
+  ctx.bezierCurveTo(
+    point(-headRadius * 0.15, -width * 1.02).x,
+    point(-headRadius * 0.15, -width * 1.02).y,
+    p1.x,
+    p1.y,
+    p2.x,
+    p2.y
+  );
+  ctx.bezierCurveTo(p3.x, p3.y, tip.x, tip.y, tip.x, tip.y);
+  ctx.bezierCurveTo(p4.x, p4.y, p5.x, p5.y, p6.x, p6.y);
+  ctx.bezierCurveTo(
+    point(-headRadius * 0.15, width * 1.02).x,
+    point(-headRadius * 0.15, width * 1.02).y,
+    p7.x,
+    p7.y,
+    p0.x,
+    p0.y
+  );
+  ctx.closePath();
+  ctx.fillStyle = tailGradient;
+  ctx.fill();
+
+  // An elongated elliptical halo, aligned to travel direction rather than a circle.
+  const haloLength = headRadius * (kind === "comet" ? 4.1 : 3.5);
+  const haloWidth = headRadius * (kind === "comet" ? 2.35 : 2.0);
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(Math.atan2(backY, backX));
+  ctx.scale(haloLength, haloWidth);
+  const headGlow = ctx.createRadialGradient(0, 0, 0.03, 0, 0, 1);
+  if (kind === "comet") {
+    headGlow.addColorStop(0, `rgba(235, 252, 255, ${(0.28 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.3, `rgba(200, 240, 255, ${(0.17 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.62, `rgba(110, 195, 255, ${(0.055 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(1, "rgba(35, 90, 195, 0)");
+  } else {
+    headGlow.addColorStop(0, `rgba(255, 255, 220, ${(0.3 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.3, `rgba(255, 220, 130, ${(0.18 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.62, `rgba(255, 125, 45, ${(0.05 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(1, "rgba(165, 20, 20, 0)");
+  }
+  ctx.beginPath();
+  ctx.arc(0, 0, 1, 0, Math.PI * 2);
   ctx.fillStyle = headGlow;
   ctx.fill();
   ctx.restore();
-
   ctx.restore();
 }
 
