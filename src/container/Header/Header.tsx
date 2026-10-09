@@ -71,8 +71,6 @@ const Header = () => {
           <span>40.64° N, 74.07° W</span>
           <span className="sep">·</span>
           <span>staten island, ny</span>
-          <span className="sep">·</span>
-          <span className="pulse">open to orbit</span>
         </motion.div>
       </div>
 

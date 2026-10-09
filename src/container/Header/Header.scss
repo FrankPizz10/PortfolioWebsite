@@ -29,7 +29,7 @@
   margin-bottom: 1.2rem;
 
   .prompt {
-    color: var(--nebula-cyan);
+    color: var(--meteor);
     font-weight: 500;
     margin-right: 0.5rem;
   }
@@ -47,6 +47,7 @@
   background-clip: text;
   color: transparent;
   width: fit-content;
+  margin-inline: auto;
 }
 
 .hero__role {
@@ -228,7 +229,7 @@
   text-decoration: none;
 
   &:hover {
-    color: var(--nebula-cyan);
+    color: var(--meteor);
   }
 
   @media screen and (max-width: 960px) {

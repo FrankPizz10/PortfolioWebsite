@@ -10,7 +10,16 @@ interface Star {
   drift: number;
 }
 
-/** Twinkling starfield rendered on a fixed full-viewport canvas. */
+interface Meteor {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+}
+
+/** Twinkling starfield with occasional shooting stars, on a fixed full-viewport canvas. */
 const Starfield = () => {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -22,6 +31,8 @@ const Starfield = () => {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let stars: Star[] = [];
+    let meteors: Meteor[] = [];
+    let nextMeteorAt = 1200;
     let raf = 0;
     let w = 0;
     let h = 0;
@@ -43,6 +54,61 @@ const Starfield = () => {
         phase: Math.random() * Math.PI * 2,
         drift: Math.random() * 0.12 + 0.02,
       }));
+      meteors = [];
+    };
+
+    const spawnMeteor = () => {
+      const fromLeft = Math.random() < 0.5;
+      const speed = 7 + Math.random() * 5;
+      const angle = ((26 + Math.random() * 16) * Math.PI) / 180;
+      meteors.push({
+        x: fromLeft ? -80 : w + 80,
+        y: Math.random() * h * 0.45,
+        vx: Math.cos(angle) * speed * (fromLeft ? 1 : -1),
+        vy: Math.sin(angle) * speed,
+        life: 0,
+        maxLife: 80 + Math.random() * 40,
+      });
+    };
+
+    const drawMeteors = (t: number) => {
+      if (reduced) return;
+      if (t > nextMeteorAt) {
+        spawnMeteor();
+        nextMeteorAt = t + 2800 + Math.random() * 5200;
+      }
+      meteors = meteors.filter(
+        (m) => m.life < m.maxLife && m.x > -320 && m.x < w + 320 && m.y < h + 320
+      );
+      for (const m of meteors) {
+        m.x += m.vx;
+        m.y += m.vy;
+        m.life += 1;
+        const fadeIn = Math.min(1, m.life / 10);
+        const fadeOut = Math.min(1, (m.maxLife - m.life) / 28);
+        const a = Math.max(0, Math.min(fadeIn, fadeOut));
+        if (a <= 0) continue;
+        // faint warm trail behind the head
+        const trail = 13;
+        const tx = m.x - m.vx * trail;
+        const ty = m.y - m.vy * trail;
+        const grad = ctx.createLinearGradient(m.x, m.y, tx, ty);
+        grad.addColorStop(0, `rgba(255, 252, 246, ${(0.95 * a).toFixed(3)})`);
+        grad.addColorStop(0.35, `rgba(255, 183, 120, ${(0.55 * a).toFixed(3)})`);
+        grad.addColorStop(1, "rgba(255, 122, 89, 0)");
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(m.x, m.y);
+        ctx.lineTo(tx, ty);
+        ctx.stroke();
+        // glowing head
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, 2.4, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 240, 220, ${(0.85 * a).toFixed(3)})`;
+        ctx.fill();
+      }
     };
 
     const draw = (t: number) => {
@@ -69,6 +135,7 @@ const Starfield = () => {
           ctx.fill();
         }
       }
+      drawMeteors(t);
       if (!reduced) raf = requestAnimationFrame(draw);
     };
 
