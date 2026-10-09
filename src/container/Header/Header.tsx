@@ -43,7 +43,7 @@ const Header = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...spring, delay: 0.28 }}
         >
-          Full-stack software engineer crafting web, mobile &amp; cloud systems —
+          Full-stack software engineer crafting web, mobile &amp; cloud systems,
           currently supporting a <span className="hl">$14B portfolio</span> at the
           Robert Wood Johnson Foundation.
         </motion.p>

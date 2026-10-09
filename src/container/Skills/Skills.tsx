@@ -40,7 +40,7 @@ const Skills = () => {
         Tools & Technologies
       </h2>
       <p className="section-lede">
-        The languages and platforms I&apos;ve shipped real software with — from
+        The languages and platforms I&apos;ve shipped real software with, from
         civic infrastructure to App Store releases.
       </p>
 

@@ -4,11 +4,11 @@ import { AppWrap } from "../../wrapper";
 import "./About.scss";
 
 const EXPERIENCE: Array<{ label: string; value: string }> = [
-  { label: "current role", value: "Software Engineer Contractor — RWJF" },
-  { label: "previous tenure", value: "Web Developer — City of Cambridge, MA" },
+  { label: "current role", value: "Software Engineer Contractor, RWJF" },
+  { label: "previous tenure", value: "Web Developer, City of Cambridge, MA" },
   { label: "origin", value: "Staten Island, New York" },
-  { label: "education", value: "Northeastern Univ. — B.S. CE + CS, '23" },
-  { label: "study abroad", value: "N.U.in Program — Univ. College Dublin" },
+  { label: "education", value: "Northeastern Univ., B.S. CE + CS, '23" },
+  { label: "study abroad", value: "N.U.in Program, Univ. College Dublin" },
 ];
 
 const About = () => {
@@ -22,7 +22,7 @@ const About = () => {
       <div className="about__grid">
         <div className="about__bio">
           <p>
-            I&apos;m Frank — a full-stack software engineer who likes building
+            I&apos;m Frank, a full-stack software engineer who likes building
             things that survive contact with the real world. These days I develop
             and maintain software supporting investment operations for a{" "}
             <strong>$14B portfolio</strong> at the Robert Wood Johnson Foundation,
@@ -37,27 +37,27 @@ const About = () => {
             >
               City of Cambridge
             </a>
-            , modernizing civic infrastructure with .NET, Sitecore, and Azure —
+            , modernizing civic infrastructure with .NET, Sitecore, and Azure,
             plus a few engineering co-ops across fuel cells, medical devices, and
             robotics-adjacent test systems along the way.
           </p>
           <p>
             Off the clock I&apos;m usually following spaceflight, grilling
             something on the Traeger, or shipping{" "}
-            <a href="#missions">side projects</a> like BeerPassport.
+            <a href="#projects">side projects</a> like BeerPassport.
           </p>
         </div>
 
-        <aside className="about__telemetry glass-card" aria-label="Quick facts">
-          <div className="telemetry__head">
-            <span className="telemetry__dot" />
-            <span className="telemetry__dot" />
-            <span className="telemetry__dot" />
-            <span className="telemetry__title">experience</span>
+        <aside className="about__experience glass-card" aria-label="Quick facts">
+          <div className="experience__head">
+            <span className="experience__dot" />
+            <span className="experience__dot" />
+            <span className="experience__dot" />
+            <span className="experience__title">experience</span>
           </div>
           <dl>
             {EXPERIENCE.map((row) => (
-              <div key={row.label} className="telemetry__row">
+              <div key={row.label} className="experience__row">
                 <dt>{row.label}</dt>
                 <dd>{row.value}</dd>
               </div>
