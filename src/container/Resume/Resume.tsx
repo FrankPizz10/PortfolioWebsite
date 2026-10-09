@@ -97,7 +97,7 @@ const Resume = () => {
 
       <motion.a
         className="btn btn-primary resume__download"
-        href="/resume.pdf"
+        href="https://drive.google.com/uc?export=download&id=19NZbtyzinUBQ35zLdbF2y-nzvS2mAAz6"
         download="FrankPizzella_Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
