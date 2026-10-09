@@ -15,8 +15,24 @@ const Resume = () => {
             </div>
             <div className="app__resume-experience">
                 <h1>Work Experience</h1>
+                <div className="rwjf">
+                    <h3>Robert Wood Johnson Foundation <span>Software Engineer Contractor	/ February 2025 – Present</span></h3>
+                    <ul>
+                        <li><p>Develop and maintain software solutions supporting investment operations for a $14B portfolio</p></li>
+                        <li><p>Integrate custodian fund data using SQL, DynamoDB, and GraphQL to improve reporting accuracy</p></li>
+                        <li><p>Maintain a legacy .NET desktop application while building web applications on AWS Lambda</p></li>
+                    </ul>
+                </div>
+                <div className="topsort">
+                    <h3>Topsort <span>Software Integration Engineer	/ Sept 2025 – Dec 2025</span></h3>
+                    <ul>
+                        <li><p>Led technical integration for a major enterprise client onboarding onto Topsort's advertising platform</p></li>
+                        <li><p>Built S3-backed SFTP catalog ingestion and Lambda workflows, plus campaign migration scripts</p></li>
+                        <li><p>Primary technical contact between Topsort and client engineers, including onsite support</p></li>
+                    </ul>
+                </div>
                 <div className="nuvera">
-                    <h3>City of Cambridge <span>Web Developer	/ May 2023 – Present</span></h3>
+                    <h3>City of Cambridge <span>Web Developer	/ May 2023 – Sept 2025</span></h3>
                     <ul>
                         <li><p>Utilize tech stack consisting of .NET MVC, Sitecore, Bitbucket, JavaScript, Azure</p></li>
                         <li><p>Improve, maintain, and modernize the main City of Cambridge website</p></li>
@@ -43,7 +59,7 @@ const Resume = () => {
                     </ul>
                 </div>
                 <div className="insulet">
-                    <h3>Insulet	 <span>System Test Engineer CO-OP / July 2021 – December 2021</span></h3>
+                    <h3>Insulet	 <span>System Test Engineer CO-OP / July 2020 – December 2020</span></h3>
                     <ul>
                         <li><p>Utilized tech stack consisting of Python, Pandas, and MATLAB</p></li>
                         <li><p>Generated Python scripts using Pandas and MATLAB scripts to analyze clinical data</p></li>
@@ -79,7 +95,7 @@ const Resume = () => {
                 <div className="certifications">
                     <ul>
                         <li><p><strong>Volunteering: </strong>Assisted the Maverick Foundation as a Web Consultant to help them launch a new website</p></li>
-                        <li><p><strong>Certifications: </strong>Sitecore 10, Microsoft Certified: Azure Fundamentals</p></li>
+                        <li><p><strong>Certifications: </strong>Congressional Gold Medal, Sitecore 10, Microsoft Certified: Azure Fundamentals</p></li>
                     </ul>
                 </div>
             </div>
