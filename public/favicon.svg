@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#0a1120"/>
-  <text x="32" y="31" text-anchor="middle" dominant-baseline="central"
+  <text x="32" y="32" text-anchor="middle" dominant-baseline="central"
         font-family="'Space Grotesk', system-ui, -apple-system, sans-serif"
         font-weight="700" font-size="30" fill="#d6ecff" letter-spacing="1">FP</text>
-  <circle cx="32" cy="50" r="2.6" fill="#6ea8fe"/>
 </svg>
