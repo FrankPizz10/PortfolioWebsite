@@ -1,21 +1,76 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
 
 :root {
-  --font-base: "DM Sans", sans-serif;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --primary-color: #edf2f8;
-  --secondary-color: #313bac;
-  --black-color: #030303;
-  --lightGray-color: #e4e4e4;
-  --gray-color: #6b7688;
-  --brown-color: #46364a;
-  --white-color: #ffffff;
-  --light-blue-color: #00ddff;
+  /* deep-space palette */
+  --space-950: #030509;
+  --space-900: #060a14;
+  --space-800: #0b1120;
+  --space-700: #131c33;
+
+  --star: #edf2ff;
+  --star-dim: #a9b6d3;
+  --muted: #7c8aa5;
+
+  --nebula-cyan: #38e1ff;
+  --nebula-violet: #a78bfa;
+  --nebula-pink: #f472b6;
+  --nova-amber: #fbbf24;
+  --meteor: #ff7a59;
+  --comet: #6ea8fe;
+  --starlight: #d6ecff;
+
+  --line: rgba(148, 178, 255, 0.14);
+  --glass: rgba(13, 20, 38, 0.62);
+
+  --radius: 18px;
+  --nav-h: 72px;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+html {
   scroll-behavior: smooth;
+}
+
+body {
+  background: var(--space-950);
+  color: var(--star);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(56, 225, 255, 0.28);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--space-950);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--space-700);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1d2a4d;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
 }

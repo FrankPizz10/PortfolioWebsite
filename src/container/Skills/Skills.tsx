@@ -3,53 +3,68 @@ import { motion } from "framer-motion";
 
 import { AppWrap } from "../../wrapper";
 import { images } from "../../constants";
-import './Skills.scss';
-
+import "./Skills.scss";
 
 interface Skill {
-    title: string;
-    descripton: string;
-    imgUrl: string;
-    alt: string;
-    additional?: string;
-    additionalStyles?: React.CSSProperties;
+  title: string;
+  description: string;
+  imgUrl: string;
+  alt: string;
+  badge?: string;
 }
 
-const skills: Skill[] = [
-    {title: 'TypeScript', descripton: 'For: Web Development', imgUrl: images.typescript, alt: 'typescript logo'},
-    {title: 'React', descripton: 'For: Front End Development', imgUrl: images.react2, alt: 'react logo'},
-    {title: 'C#', descripton: 'For: .NET MV', imgUrl: images.csharp, alt: 'c sharp logo'},
-    {title: 'Java', descripton: 'For: Android Development', imgUrl: images.java, alt: 'java logo'},
-    {title: 'Python', descripton: 'For: Data Processing and Machine Learning', imgUrl: images.python, alt: 'python logo'},
-    {title: 'SQL', descripton: 'For: Database Management', imgUrl: images.sql, alt: 'sql logo'},
-    {title: 'GraphQL', descripton: 'For: API Development', imgUrl: images.graphql, alt: 'graphql logo'},
-    {title: 'Node.js', descripton: 'For: Backend Development', imgUrl: images.node, alt: 'node logo'},
-    {title: 'Sitecore', descripton: 'For: CMS and Web Development', imgUrl: images.sitecore, alt: 'sitecore logo', additional: 'Sitecore 10 Certified', additionalStyles: {'fontWeight': 'bold'}},
-]
+const SKILLS: Skill[] = [
+  { title: "TypeScript", description: "Web development", imgUrl: images.typescriptIcon, alt: "TypeScript logo" },
+  { title: "React", description: "Front-end development", imgUrl: images.reactIcon, alt: "React logo" },
+  { title: "C#", description: ".NET & backend systems", imgUrl: images.csharpIcon, alt: "C# logo" },
+  { title: "Python", description: "Data processing & ML", imgUrl: images.pythonIcon, alt: "Python logo" },
+  { title: "SQL", description: "Database management", imgUrl: images.mysqlIcon, alt: "MySQL logo" },
+  { title: "GraphQL", description: "API development", imgUrl: images.graphqlIcon, alt: "GraphQL logo" },
+  { title: "Node.js", description: "Backend development", imgUrl: images.nodejsIcon, alt: "Node.js logo" },
+  { title: "AWS", description: "Cloud infrastructure", imgUrl: images.awsIcon, alt: "AWS logo" },
+  { title: "Java", description: "Android development", imgUrl: images.javaIcon, alt: "Java logo" },
+  {
+    title: "Sitecore",
+    description: "CMS & web development",
+    imgUrl: images.sitecoreIcon,
+    alt: "Sitecore logo",
+    badge: "Sitecore 10 Certified",
+  },
+];
 
 const Skills = () => {
-    return (
-        <>
-            <h2 className="head-text">My Go-To Tech Stack</h2>
+  return (
+    <div className="skills">
+      <span className="section-kicker">02 // Tech stack</span>
+      <h2 className="section-title">
+        Tools I reach for
+      </h2>
+      <p className="section-lede">
+        The languages and platforms I&apos;ve shipped real software with — from
+        civic infrastructure to App Store releases.
+      </p>
 
-            <div className="app__profiles">
-                {skills.map((skill, index) => (
-                    <motion.div
-                        whileInView={{opacity: 1}}
-                        whileHover={{scale: 1.1}}
-                        transition={{duration: 0.5, type: 'tween'}}
-                        className="app__profile-item"
-                        key={skill.title + index}
-                    >
-                        <img src={skill.imgUrl} alt={skill.alt}/>
-                        <h2 className="bold-text" style={{marginTop: 20}}>{skill.title}</h2>
-                        <p className="p-text" style={{marginTop: 10}}>{skill.descripton}</p>
-                        {skill.additional && <p className="p-text" style={{marginTop: 10, ...skill.additionalStyles}}>{skill.additional}</p>}
-                    </motion.div>
-                ))}
+      <div className="skills__grid">
+        {SKILLS.map((skill, i) => (
+          <motion.div
+            key={skill.title}
+            className="skill-card glass-card"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="skill-card__icon">
+              <img src={skill.imgUrl} alt={skill.alt} loading="lazy" />
             </div>
-        </>
-    );
+            <h3 className="skill-card__name">{skill.title}</h3>
+            <p className="skill-card__desc">{skill.description}</p>
+            {skill.badge && <span className="skill-card__badge">{skill.badge}</span>}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
-export default AppWrap(Skills, 'skills');
+export default AppWrap(Skills, "skills");
