@@ -102,7 +102,7 @@
   margin-bottom: 1rem;
 
   .grad {
-    background: linear-gradient(92deg, var(--nebula-cyan), var(--nebula-violet) 60%, var(--nebula-pink));
+    background: linear-gradient(92deg, var(--nebula-cyan), #7dd3fc 45%, var(--nebula-violet));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
