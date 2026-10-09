@@ -1,91 +1,90 @@
 import React, { useState } from "react";
-import { HiMenuAlt4, HiX} from 'react-icons/hi';
-import { motion } from 'framer-motion';
-import { NavLink, useLocation } from 'react-router-dom';
+import { HiMenuAlt4, HiX } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
+import { NavLink, useLocation } from "react-router-dom";
 
-import { images } from "../../constants";
-import './Navbar.scss';
+import "./Navbar.scss";
 
-interface NavBarLinkMap {
-    [key: string]: string;
-}
+const LINKS: Array<{ label: string; href: string }> = [
+  { label: "About", href: "#about" },
+  { label: "Stack", href: "#skills" },
+  { label: "Missions", href: "#missions" },
+  { label: "Contact", href: "#contact" },
+];
 
 const Navbar = () => {
-    const [toggle, setToggle] = useState(false);
-    const links = ['home', 'about', 'skills', 'mobile app', 'chess app', 'contact'];
+  const [open, setOpen] = useState(false);
+  const onResume = useLocation().pathname === "/resume";
 
-    const linksMap: NavBarLinkMap = {
-        'home': 'home',
-        'about': 'about',
-        'skills': 'skills',
-        'mobile app': 'mobileapp',
-        'chess app': 'chessapp',
-        'contact': 'contact',
-    }
+  const goTop = () => {
+    setOpen(false);
+    window.scrollTo({ top: 0 });
+  };
 
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-        });
-    }
+  return (
+    <nav className="nav">
+      <div className="nav__inner">
+        <NavLink to="/" className="nav__logo" onClick={goTop} aria-label="Frank Pizzella — home">
+          <span className="nav__logo-mark">FP</span>
+          <span className="nav__logo-text">
+            frank<span className="nav__logo-dot">.</span>pizzella
+          </span>
+        </NavLink>
 
-    const resumedropDown = () => {
-        setToggle(false);
-        scrollToTop();
-    }
+        {!onResume && (
+          <ul className="nav__links">
+            {LINKS.map((l) => (
+              <li key={l.href}>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        )}
 
-    return (
-        <nav className="app__navbar" style={{padding: useLocation().pathname === '/resume' ? '1.5rem 2rem' : ''}}>
-            <div className="app__navbar-logo">
-                <NavLink to="/" onClick={scrollToTop}>
-                    <img src={images.frankTitle} alt="logo" />
+        <div className="nav__actions">
+          <NavLink to="/resume" className="btn btn-ghost nav__resume" onClick={goTop}>
+            Résumé
+          </NavLink>
+          {!onResume && (
+            <button
+              className="nav__burger"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Close menu" : "Open menu"}
+            >
+              {open ? <HiX /> : <HiMenuAlt4 />}
+            </button>
+          )}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {open && !onResume && (
+          <motion.div
+            className="nav__mobile"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            <ul>
+              {LINKS.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} onClick={() => setOpen(false)}>
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <NavLink to="/resume" onClick={goTop}>
+                  Résumé
                 </NavLink>
-            </div>
-            {
-                useLocation().pathname !== '/resume' && (
-                    <div className="app__navbar-links">
-                        <ul>
-                            {links.map((item, index) => (
-                                <li className="app__flex p-text" key={`link-${item}`}>
-                                    <div />
-                                    <a href={`#${linksMap[item]}`}>{item}</a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )
-            }
-            
-            <div className="app__navbar-resume">
-                <NavLink className="app__navbar-resume-link" to="/resume" onClick={scrollToTop}>
-                    <h3>Resume</h3>  
-                </NavLink>           
-            </div>
-            <div className="app__navbar-menu">
-                <HiMenuAlt4 onClick={() => setToggle(true)}/>
-                { toggle && (
-                    <motion.div
-                        whileInView={{x:[300,0]}}
-                        transition={{duration: 0.85, ease: 'easeOut'}}
-                    >
-                        <HiX onClick={() => setToggle(false)}/>
-                        <ul>
-                            {links.map((item) => (
-                                <li key={item}>
-                                    <a href={`#${linksMap[item]}`} onClick={() => setToggle(false)}>
-                                        {item}
-                                    </a>
-                                </li>
-                            ))}
-                            <li>
-                                <NavLink to="/resume" onClick={resumedropDown}>Resume</NavLink>
-                            </li>
-                        </ul>
-                    </motion.div>
-                )}
-            </div>
-        </nav>
-    );
+              </li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
 };
 
 export default Navbar;
