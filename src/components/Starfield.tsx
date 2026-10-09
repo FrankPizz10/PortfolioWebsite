@@ -20,6 +20,7 @@ interface Streak {
   life: number;
   maxLife: number;
   kind: StreakKind;
+  approaching: boolean;
 }
 
 interface StreakStyle {
@@ -106,7 +107,6 @@ const STAR_COLORS = [
   "230, 237, 255",
 ];
 
-/** Draw optical diffraction spikes for stars and shooting stars. */
 function drawDiffractionSpikes(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -181,7 +181,6 @@ function drawDiffractionSpikes(
     ctx.beginPath();
     ctx.moveTo(x - dx * innerLength, y - dy * innerLength);
     ctx.lineTo(x + dx * length, y + dy * length);
-
     ctx.strokeStyle = gradient;
     ctx.lineWidth = width;
     ctx.stroke();
@@ -219,7 +218,6 @@ function drawDiffractionSpikes(
       ctx.beginPath();
       ctx.moveTo(x - dx * coreRadius, y - dy * coreRadius);
       ctx.lineTo(x + dx * diagonalLength, y + dy * diagonalLength);
-
       ctx.strokeStyle = gradient;
       ctx.lineWidth = diagonalWidth;
       ctx.stroke();
@@ -229,7 +227,6 @@ function drawDiffractionSpikes(
   ctx.restore();
 }
 
-/** Draw a soft, elongated colored glow around a comet or meteor. */
 function drawAtmosphericGlow(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -239,7 +236,8 @@ function drawAtmosphericGlow(
   headRadius: number,
   alpha: number,
   kind: "comet" | "meteor",
-  desktop: boolean
+  desktop: boolean,
+  depthScale: number
 ) {
   if (alpha <= 0) return;
 
@@ -247,189 +245,112 @@ function drawAtmosphericGlow(
   ctx.globalCompositeOperation = "lighter";
 
   const speed = Math.hypot(vx, vy) || 1;
-
   const backX = -vx / speed;
   const backY = -vy / speed;
-
   const sideX = -backY;
   const sideY = backX;
 
-  // Longer atmospheric tails on smaller screens.
   const length =
-    (kind === "comet" ? 43 : 40) *
-    (desktop ? 1.35 : 1.5);
+    (kind === "comet" ? 72 : 54) *
+    (desktop ? 1.5 : 1.9) *
+    depthScale;
+  const width = (kind === "comet" ? 17 : 15) * depthScale;
 
-  const width = kind === "comet" ? 15 : 13;
-
+  // Broad, low-opacity outer glow plus a softer inner glow. The blur makes
+  // the layers merge together instead of showing separate opacity bands.
   const layers =
     kind === "comet"
       ? [
-          {
-            offset: 0,
-            length: length * 0.7,
-            radius: width * 1.15,
-            color: "65, 155, 255",
-            alpha: 0.09,
-          },
-          {
-            offset: 0,
-            length: length * 0.45,
-            radius: width * 0.8,
-            color: "105, 205, 255",
-            alpha: 0.12,
-          },
-          {
-            offset: 0,
-            length: length * 0.2,
-            radius: width * 0.48,
-            color: "210, 245, 255",
-            alpha: 0.17,
-          },
+          { length: length, radius: width * 1.25, color: "65, 145, 255", alpha: 0.045, blur: 10 },
+          { length: length * 0.76, radius: width * 0.9, color: "90, 190, 255", alpha: 0.065, blur: 7 },
+          { length: length * 0.48, radius: width * 0.58, color: "175, 230, 255", alpha: 0.075, blur: 4 },
         ]
       : [
-          {
-            offset: 0,
-            length: length * 0.8,
-            radius: width * 1.2,
-            color: "235, 35, 20",
-            alpha: 0.10,
-          },
-          {
-            offset: 0,
-            length: length * 0.55,
-            radius: width * 0.85,
-            color: "255, 75, 20",
-            alpha: 0.15,
-          },
-          {
-            offset: 0,
-            length: length * 0.3,
-            radius: width * 0.58,
-            color: "255, 150, 40",
-            alpha: 0.18,
-          },
+          { length: length, radius: width * 1.3, color: "220, 35, 25", alpha: 0.045, blur: 10 },
+          { length: length * 0.78, radius: width * 0.92, color: "255, 75, 25", alpha: 0.065, blur: 7 },
+          { length: length * 0.5, radius: width * 0.6, color: "255, 165, 55", alpha: 0.08, blur: 4 },
         ];
 
   for (const layer of layers) {
     const tailX = x + backX * layer.length;
     const tailY = y + backY * layer.length;
-
     const gradient = ctx.createLinearGradient(x, y, tailX, tailY);
 
-    gradient.addColorStop(
-      0,
-      `rgba(${layer.color}, ${(layer.alpha * alpha).toFixed(3)})`
-    );
-    gradient.addColorStop(
-      0.35,
-      `rgba(${layer.color}, ${(layer.alpha * alpha * 0.8).toFixed(3)})`
-    );
-    gradient.addColorStop(
-      0.72,
-      `rgba(${layer.color}, ${(layer.alpha * alpha * 0.35).toFixed(3)})`
-    );
+    // More gradient stops produce a gradual fade along the whole tail.
+    gradient.addColorStop(0, `rgba(${layer.color}, ${(layer.alpha * alpha).toFixed(3)})`);
+    gradient.addColorStop(0.16, `rgba(${layer.color}, ${(layer.alpha * alpha * 0.92).toFixed(3)})`);
+    gradient.addColorStop(0.38, `rgba(${layer.color}, ${(layer.alpha * alpha * 0.68).toFixed(3)})`);
+    gradient.addColorStop(0.62, `rgba(${layer.color}, ${(layer.alpha * alpha * 0.38).toFixed(3)})`);
+    gradient.addColorStop(0.82, `rgba(${layer.color}, ${(layer.alpha * alpha * 0.14).toFixed(3)})`);
     gradient.addColorStop(1, `rgba(${layer.color}, 0)`);
 
     const startWidth = layer.radius;
-    const endWidth = layer.radius * 0.12;
+    const endWidth = layer.radius * 0.06;
 
+    ctx.save();
+    ctx.filter = `blur(${layer.blur * depthScale}px)`;
     ctx.beginPath();
-    ctx.moveTo(
-      x + sideX * startWidth,
-      y + sideY * startWidth
-    );
-
+    ctx.moveTo(x + sideX * startWidth, y + sideY * startWidth);
     ctx.bezierCurveTo(
-      x + backX * layer.length * 0.25 +
-        sideX * startWidth * 0.9,
-      y + backY * layer.length * 0.25 +
-        sideY * startWidth * 0.9,
-      tailX - backX * layer.length * 0.15 +
-        sideX * endWidth,
-      tailY - backY * layer.length * 0.15 +
-        sideY * endWidth,
+      x + backX * layer.length * 0.28 + sideX * startWidth * 0.9,
+      y + backY * layer.length * 0.28 + sideY * startWidth * 0.9,
+      tailX - backX * layer.length * 0.12 + sideX * endWidth,
+      tailY - backY * layer.length * 0.12 + sideY * endWidth,
       tailX + sideX * endWidth,
       tailY + sideY * endWidth
     );
-
-    ctx.lineTo(
-      tailX - sideX * endWidth,
-      tailY - sideY * endWidth
-    );
-
+    ctx.lineTo(tailX - sideX * endWidth, tailY - sideY * endWidth);
     ctx.bezierCurveTo(
-      tailX - backX * layer.length * 0.15 -
-        sideX * endWidth,
-      tailY - backY * layer.length * 0.15 -
-        sideY * endWidth,
-      x + backX * layer.length * 0.25 -
-        sideX * startWidth * 0.9,
-      y + backY * layer.length * 0.25 -
-        sideY * startWidth * 0.9,
+      tailX - backX * layer.length * 0.12 - sideX * endWidth,
+      tailY - backY * layer.length * 0.12 - sideY * endWidth,
+      x + backX * layer.length * 0.28 - sideX * startWidth * 0.9,
+      y + backY * layer.length * 0.28 - sideY * startWidth * 0.9,
       x - sideX * startWidth,
       y - sideY * startWidth
     );
-
     ctx.closePath();
     ctx.fillStyle = gradient;
     ctx.fill();
+    ctx.restore();
   }
 
-  const headGlowRadius =
-    headRadius * (kind === "comet" ? 5.5 : 6);
-
+  // A single, smoothly feathered head glow avoids a second visible halo ring.
+  const headGlowRadius = headRadius * (kind === "comet" ? 7.2 : 7.5);
+  const innerRadius = Math.max(0.1, headRadius * 0.12);
   const headGlow = ctx.createRadialGradient(
-    x,
-    y,
-    headRadius * 0.15,
-    x,
-    y,
-    headGlowRadius
+    x, y, innerRadius,
+    x, y, headGlowRadius
   );
 
   if (kind === "comet") {
-    headGlow.addColorStop(
-      0,
-      `rgba(240, 255, 255, ${(0.65 * alpha).toFixed(3)})`
-    );
-    headGlow.addColorStop(
-      0.18,
-      `rgba(170, 230, 255, ${(0.36 * alpha).toFixed(3)})`
-    );
-    headGlow.addColorStop(
-      0.48,
-      `rgba(75, 165, 255, ${(0.14 * alpha).toFixed(3)})`
-    );
+    headGlow.addColorStop(0, `rgba(240, 255, 255, ${(0.34 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.08, `rgba(205, 242, 255, ${(0.29 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.2, `rgba(145, 215, 255, ${(0.2 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.38, `rgba(90, 175, 255, ${(0.11 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.58, `rgba(65, 140, 245, ${(0.055 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.78, `rgba(45, 105, 220, ${(0.018 * alpha).toFixed(3)})`);
     headGlow.addColorStop(1, "rgba(35, 100, 220, 0)");
   } else {
-    headGlow.addColorStop(
-      0,
-      `rgba(255, 255, 220, ${(0.8 * alpha).toFixed(3)})`
-    );
-    headGlow.addColorStop(
-      0.16,
-      `rgba(255, 200, 75, ${(0.52 * alpha).toFixed(3)})`
-    );
-    headGlow.addColorStop(
-      0.4,
-      `rgba(255, 85, 25, ${(0.25 * alpha).toFixed(3)})`
-    );
-    headGlow.addColorStop(
-      0.7,
-      `rgba(210, 30, 20, ${(0.1 * alpha).toFixed(3)})`
-    );
+    headGlow.addColorStop(0, `rgba(255, 255, 225, ${(0.4 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.08, `rgba(255, 220, 130, ${(0.32 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.2, `rgba(255, 155, 65, ${(0.22 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.38, `rgba(255, 90, 35, ${(0.12 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.58, `rgba(225, 45, 25, ${(0.055 * alpha).toFixed(3)})`);
+    headGlow.addColorStop(0.8, `rgba(185, 25, 25, ${(0.018 * alpha).toFixed(3)})`);
     headGlow.addColorStop(1, "rgba(150, 15, 20, 0)");
   }
 
+  ctx.save();
+  ctx.filter = `blur(${3.5 * depthScale}px)`;
   ctx.beginPath();
   ctx.arc(x, y, headGlowRadius, 0, Math.PI * 2);
   ctx.fillStyle = headGlow;
   ctx.fill();
+  ctx.restore();
 
   ctx.restore();
 }
 
-/** Fixed twinkling starfield with glowing comets and meteors. */
 const Starfield = () => {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -451,6 +372,7 @@ const Starfield = () => {
     let w = 0;
     let h = 0;
     let desktop = false;
+    let lastFrameTime = 0;
 
     const seed = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -501,55 +423,61 @@ const Starfield = () => {
       const angle =
         ((26 + Math.random() * 16) * Math.PI) / 180;
 
+      // Each object gets its own direction of depth travel.
+      const approaching = Math.random() < 0.5;
+
       let speed: number;
       let maxLife: number;
 
       if (kind === "star") {
         speed = desktop
-          ? 5 + Math.random() * 2
-          : 1.8 + Math.random() * 1.0;
+          ? 3.8 + Math.random() * 1.5
+          : 1.2 + Math.random() * 0.6;
 
         maxLife = desktop
-          ? 180 + Math.random() * 80
-          : 280 + Math.random() * 120;
+          ? 420 + Math.random() * 180
+          : 480 + Math.random() * 220;
       } else if (kind === "comet") {
         speed = desktop
-          ? 2.5 + Math.random() * 1.5
-          : 1.0 + Math.random() * 0.7;
+          ? 1.8 + Math.random() * 1.0
+          : 0.65 + Math.random() * 0.4;
 
         maxLife = desktop
-          ? 280 + Math.random() * 100
-          : 380 + Math.random() * 140;
+          ? 600 + Math.random() * 220
+          : 680 + Math.random() * 260;
       } else {
         speed = desktop
-          ? 4.5 + Math.random() * 2
-          : 1.6 + Math.random() * 1.0;
+          ? 3.2 + Math.random() * 1.4
+          : 1.1 + Math.random() * 0.7;
 
         maxLife = desktop
-          ? 180 + Math.random() * 80
-          : 280 + Math.random() * 120;
+          ? 420 + Math.random() * 180
+          : 500 + Math.random() * 220;
       }
 
       streaks.push({
-        x: fromLeft ? -250 : w + 250,
+        x: fromLeft ? -300 : w + 300,
         y: Math.random() * h * 0.45,
         vx: Math.cos(angle) * speed * (fromLeft ? 1 : -1),
         vy: Math.sin(angle) * speed,
         life: 0,
         maxLife,
         kind,
+        approaching,
       });
     };
 
-    const drawStreaks = (t: number) => {
+    const drawStreaks = (t: number, delta: number) => {
       if (reduced) return;
 
       if (t > nextStreakAt) {
         spawnStreak();
-        nextStreakAt = t + 2200 + Math.random() * 3800;
+
+        // Slightly more breathing room between objects.
+        nextStreakAt = t + 2600 + Math.random() * 3600;
       }
 
-      const margin = desktop ? 1600 : 1200;
+      const margin = desktop ? 1800 : 1400;
 
       streaks = streaks.filter(
         (s) =>
@@ -561,35 +489,38 @@ const Starfield = () => {
       );
 
       for (const s of streaks) {
-        s.x += s.vx;
-        s.y += s.vy;
-        s.life += 1;
+        s.x += s.vx * delta;
+        s.y += s.vy * delta;
+        s.life += delta;
 
-        const fadeIn = Math.min(1, s.life / 12);
-        const fadeOutStart = s.maxLife * 0.88;
+        const progress = Math.min(1, s.life / s.maxLife);
 
-        const fadeOut =
-          s.life <= fadeOutStart
-            ? 1
-            : Math.max(
-                0,
-                (s.maxLife - s.life) /
-                  (s.maxLife - fadeOutStart)
-              );
+        // Smooth entry and exit; no periodic brightness flicker.
+        const fadeIn = Math.min(1, progress / 0.1);
+        const fadeOut = Math.min(1, (1 - progress) / 0.12);
+        const lifecycleAlpha = Math.min(fadeIn, fadeOut);
 
-        let a = Math.min(fadeIn, fadeOut);
+        if (lifecycleAlpha <= 0) continue;
 
-        if (a <= 0) continue;
+        // Ease the depth transition to avoid sudden size changes.
+        const eased = progress * progress * (3 - 2 * progress);
 
-        if (s.kind === "meteor") {
-          a *= 0.82 + 0.18 * Math.sin(s.life * 1.7);
-        }
+        const depthScale = s.approaching
+          ? 0.48 + eased * 1.35
+          : 1.65 - eased * 1.2;
 
+        // Objects coming toward the viewer brighten; receding objects dim.
+        const depthAlpha = s.approaching
+          ? 0.42 + eased * 0.58
+          : 1.0 - eased * 0.58;
+
+        const alpha = lifecycleAlpha * depthAlpha;
         const style = STREAK_STYLES[s.kind];
 
-        // Longer trails on mobile while preserving desktop styling.
-        const trailMultiplier = desktop ? 2.2 : 2.0;
-        const trailLength = style.trail * trailMultiplier;
+        // Longer trails on both mobile and desktop.
+        const trailMultiplier = desktop ? 3.0 : 3.2;
+        const trailLength =
+          style.trail * trailMultiplier * depthScale;
 
         const tx = s.x - s.vx * trailLength;
         const ty = s.y - s.vy * trailLength;
@@ -601,14 +532,15 @@ const Starfield = () => {
             s.y,
             s.vx,
             s.vy,
-            style.head,
-            a,
+            style.head * depthScale,
+            alpha,
             s.kind,
-            desktop
+            desktop,
+            depthScale
           );
         }
 
-        // Luminous tapered trail.
+        // Main trail, scaled smoothly with perceived depth.
         const grad = ctx.createLinearGradient(
           s.x,
           s.y,
@@ -616,10 +548,10 @@ const Starfield = () => {
           ty
         );
 
-        for (const [offset, rgb, alpha] of style.stops) {
+        for (const [offset, rgb, stopAlpha] of style.stops) {
           grad.addColorStop(
             offset,
-            `rgba(${rgb}, ${(alpha * a).toFixed(3)})`
+            `rgba(${rgb}, ${(stopAlpha * alpha).toFixed(3)})`
           );
         }
 
@@ -628,6 +560,7 @@ const Starfield = () => {
         ctx.strokeStyle = grad;
         ctx.lineWidth =
           style.width *
+          depthScale *
           (s.kind === "meteor" && desktop ? 1.1 : 1);
         ctx.lineCap = "round";
 
@@ -637,82 +570,54 @@ const Starfield = () => {
         ctx.stroke();
         ctx.restore();
 
-        // Only shooting stars retain sharp diffraction spikes.
+        // Shooting-star diffraction spikes scale with depth, too.
         if (s.kind === "star") {
-          const spikeScale = desktop ? 1.5 : 1.2;
+          const spikeScale = desktop ? 1.5 : 1.3;
 
           drawDiffractionSpikes(
             ctx,
             s.x,
             s.y,
-            style.head,
-            style.spikeLength * spikeScale,
-            style.spikeWidth,
+            style.head * depthScale,
+            style.spikeLength * spikeScale * depthScale,
+            style.spikeWidth * depthScale,
             style.spikeColor,
-            a,
+            alpha,
             style.diagonalSpikes
           );
         }
 
-        // Bright central head.
+        // Central head grows/shrinks continuously.
+        const headRadius = style.head * depthScale;
+
         ctx.save();
         ctx.globalCompositeOperation = "lighter";
 
         ctx.beginPath();
-        ctx.arc(s.x, s.y, style.head, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, headRadius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${style.headColor}, ${(
-          style.headAlpha * a
+          style.headAlpha * alpha
         ).toFixed(3)})`;
         ctx.fill();
 
         ctx.restore();
 
-        // Subtle additional halo.
-        if (style.halo) {
-          const haloColor =
-            s.kind === "meteor"
-              ? "255, 90, 35"
-              : "100, 200, 255";
 
-          const halo = ctx.createRadialGradient(
-            s.x,
-            s.y,
-            0,
-            s.x,
-            s.y,
-            style.head * style.halo
-          );
-
-          halo.addColorStop(
-            0,
-            `rgba(${haloColor}, ${(0.24 * a).toFixed(3)})`
-          );
-          halo.addColorStop(1, `rgba(${haloColor}, 0)`);
-
-          ctx.save();
-          ctx.globalCompositeOperation = "lighter";
-
-          ctx.beginPath();
-          ctx.arc(
-            s.x,
-            s.y,
-            style.head * style.halo,
-            0,
-            Math.PI * 2
-          );
-          ctx.fillStyle = halo;
-          ctx.fill();
-
-          ctx.restore();
-        }
       }
     };
 
     const draw = (t: number) => {
+      // Normalize animation updates for different refresh rates.
+      const delta = lastFrameTime
+        ? Math.min((t - lastFrameTime) / 16.667, 2)
+        : 1;
+
+      lastFrameTime = t;
+
       ctx.clearRect(0, 0, w, h);
 
       for (const s of stars) {
-        // Background stars remain stationary and only twinkle.
+        // Background stars stay fixed; only their twinkle changes.
         const tw = reduced
           ? 1
           : 0.55 +
@@ -721,7 +626,6 @@ const Starfield = () => {
 
         const alpha = s.baseAlpha * tw;
 
-        // Background stars retain their diffraction spikes.
         if (s.r > 0.85) {
           const sizeFactor = Math.min(
             1,
@@ -741,13 +645,11 @@ const Starfield = () => {
           );
         }
 
-        // Crisp star core.
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${s.color}, ${alpha.toFixed(3)})`;
         ctx.fill();
 
-        // Soft glow on larger background stars.
         if (s.r > 1.2) {
           const glow = ctx.createRadialGradient(
             s.x,
@@ -771,7 +673,7 @@ const Starfield = () => {
         }
       }
 
-      drawStreaks(t);
+      drawStreaks(t, delta);
 
       if (!reduced) {
         raf = requestAnimationFrame(draw);
@@ -781,7 +683,10 @@ const Starfield = () => {
     seed();
     draw(0);
 
-    const onResize = () => seed();
+    const onResize = () => {
+      seed();
+      lastFrameTime = 0;
+    };
 
     window.addEventListener("resize", onResize);
 
