@@ -56,7 +56,7 @@
 }
 
 .nav__logo-dot {
-  color: var(--nebula-cyan);
+  color: var(--meteor);
 }
 
 .nav__links {
@@ -64,6 +64,20 @@
   align-items: center;
   gap: 2rem;
   list-style: none;
+
+  /* each tab gets its streaker accent */
+  li:nth-child(1) a::after {
+    background: linear-gradient(90deg, var(--starlight), transparent);
+  }
+  li:nth-child(2) a::after {
+    background: linear-gradient(90deg, var(--comet), transparent);
+  }
+  li:nth-child(3) a::after {
+    background: linear-gradient(90deg, var(--meteor), transparent);
+  }
+  li:nth-child(4) a::after {
+    background: linear-gradient(90deg, var(--nebula-violet), transparent);
+  }
 
   a {
     position: relative;

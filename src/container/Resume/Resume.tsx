@@ -97,8 +97,8 @@ const Resume = () => {
 
       <motion.a
         className="btn btn-primary resume__download"
-        href={process.env.REACT_APP_RESUME_URL}
-        download
+        href="/resume.pdf"
+        download="FrankPizzella_Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
         initial={{ opacity: 0, y: 16 }}

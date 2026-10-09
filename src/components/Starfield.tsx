@@ -127,8 +127,8 @@ const Starfield = () => {
         speed = 3.5 + Math.random() * 2;
         maxLife = 110 + Math.random() * 50;
       } else {
-        speed = 10 + Math.random() * 5;
-        maxLife = 45 + Math.random() * 20;
+        speed = 6.5 + Math.random() * 3;
+        maxLife = 55 + Math.random() * 25;
       }
       streaks.push({
         x: fromLeft ? -80 : w + 80,
