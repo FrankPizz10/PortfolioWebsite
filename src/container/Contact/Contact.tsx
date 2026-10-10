@@ -15,7 +15,7 @@ const Contact = () => {
       </h2>
       <p className="section-lede">
         Whether it&apos;s a role, a collaboration, or just good old-fashioned
-        nerd talk about spaceflight — my inbox is always listening.
+        nerd talk about spaceflight. My inbox is always listening.
       </p>
 
       <motion.div

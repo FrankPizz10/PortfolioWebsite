@@ -8,7 +8,7 @@ import "./Navbar.scss";
 const LINKS: Array<{ label: string; href: string }> = [
   { label: "About", href: "#about" },
   { label: "Stack", href: "#skills" },
-  { label: "Missions", href: "#missions" },
+  { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <nav className="nav">
       <div className="nav__inner">
-        <NavLink to="/" className="nav__logo" onClick={goTop} aria-label="Frank Pizzella — home">
+        <NavLink to="/" className="nav__logo" onClick={goTop} aria-label="Frank Pizzella, home">
           <span className="nav__logo-mark">FP</span>
           <span className="nav__logo-text">
             frank<span className="nav__logo-dot">.</span>pizzella

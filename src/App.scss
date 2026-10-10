@@ -101,7 +101,7 @@
 .resume .section-kicker::before {
   background: linear-gradient(90deg, var(--comet), transparent);
 }
-#missions .section-kicker::before {
+#projects .section-kicker::before {
   background: linear-gradient(90deg, var(--meteor), transparent);
 }
 .contact .section-kicker::before {
@@ -219,8 +219,8 @@
   }
 }
 
-/* ---------- missions ---------- */
-.missions-grid {
+/* ---------- projects ---------- */
+.projects-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
@@ -231,13 +231,13 @@
   }
 }
 
-.mission {
+.project {
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.mission__media {
+.project__media {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -253,12 +253,12 @@
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .mission:hover & img {
+  .project:hover & img {
     transform: scale(1.02);
   }
 }
 
-.mission__status {
+.project__status {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
@@ -286,14 +286,14 @@
   }
 }
 
-.mission__body {
+.project__body {
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.mission__code {
+.project__code {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.28em;
@@ -302,7 +302,7 @@
   margin-bottom: 0.7rem;
 }
 
-.mission__title {
+.project__title {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
@@ -310,14 +310,14 @@
   margin-bottom: 0.7rem;
 }
 
-.mission__desc {
+.project__desc {
   color: var(--star-dim);
   font-size: 0.96rem;
   line-height: 1.7;
   margin-bottom: 1.2rem;
 }
 
-.mission__tech {
+.project__tech {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
@@ -336,14 +336,14 @@
   }
 }
 
-.mission__actions {
+.project__actions {
   margin-top: auto;
   display: flex;
   gap: 0.8rem;
   flex-wrap: wrap;
 }
 
-.mission__btn {
+.project__btn {
   padding: 0.7rem 1.4rem;
   font-size: 0.88rem;
 

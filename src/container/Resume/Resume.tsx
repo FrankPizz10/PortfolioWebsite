@@ -16,7 +16,7 @@ const EXPERIENCE: Entry[] = [
   {
     company: "Robert Wood Johnson Foundation",
     role: "Software Engineer Contractor",
-    dates: "Feb 2026 — Present",
+    dates: "Feb 2026 – Present",
     current: true,
     bullets: [
       "Develop and maintain software solutions supporting investment operations for a $14B portfolio",
@@ -27,7 +27,7 @@ const EXPERIENCE: Entry[] = [
   {
     company: "Topsort",
     role: "Software Integration Engineer",
-    dates: "Sep 2025 — Dec 2025",
+    dates: "Sep 2025 – Dec 2025",
     bullets: [
       "Led technical integration for a major enterprise client onboarding onto Topsort's advertising platform",
       "Built S3-backed SFTP catalog ingestion and Lambda workflows, plus campaign migration scripts",
@@ -37,7 +37,7 @@ const EXPERIENCE: Entry[] = [
   {
     company: "City of Cambridge",
     role: "Web Developer",
-    dates: "May 2023 — Sep 2025",
+    dates: "May 2023 – Sep 2025",
     bullets: [
       "Improved, maintained, and modernized the main City of Cambridge website",
       "Integrated Sitecore controls, renderings, and templates to allow staff to add content",
@@ -48,7 +48,7 @@ const EXPERIENCE: Entry[] = [
   {
     company: "Nuvera Fuel Cells",
     role: "Software Engineering Co-op",
-    dates: "Jul 2022 — Dec 2022",
+    dates: "Jul 2022 – Dec 2022",
     bullets: [
       "Processed, filtered, and plotted 3D fuel-cell engine performance data with Python, Scikit-learn, Pandas",
       "Applied ML regression algorithms to find correlations between conditions and engine performance",
@@ -57,7 +57,7 @@ const EXPERIENCE: Entry[] = [
   {
     company: "Philips North America",
     role: "Software Engineering Co-op",
-    dates: "Jul 2021 — Dec 2021",
+    dates: "Jul 2021 – Dec 2021",
     bullets: [
       "Enhanced CI pipelines testing the Philips Patient Information Center (PIC IX)",
       "Created build and release pipelines deploying PIC IX on a network system",
@@ -67,7 +67,7 @@ const EXPERIENCE: Entry[] = [
   {
     company: "Insulet",
     role: "System Test Engineer Co-op",
-    dates: "Jul 2020 — Dec 2020",
+    dates: "Jul 2020 – Dec 2020",
     bullets: [
       "Tested the Horizon Omnipod 5 system in a formal design verification process",
       "Designed a continuous glucose monitor simulation in Python; analyzed clinical data with Pandas",
@@ -76,7 +76,7 @@ const EXPERIENCE: Entry[] = [
   {
     company: "CodeWiz",
     role: "Coding Coach",
-    dates: "Jan 2023 — May 2023",
+    dates: "Jan 2023 – May 2023",
     bullets: [
       "Coached kids ages 8–14 on computer science fundamentals and 2D game design",
       "Created curriculums and lesson plans for continuity in their learning",
@@ -87,12 +87,12 @@ const EXPERIENCE: Entry[] = [
 const Resume = () => {
   return (
     <div className="resume section">
-      <span className="section-kicker">Mission log</span>
+      <span className="section-kicker">Career</span>
       <h1 className="section-title">
         Résumé
       </h1>
       <p className="section-lede">
-        Every role, co-op, and launch — the full flight record.
+        Every role, co-op, and project.
       </p>
 
       <motion.a

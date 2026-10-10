@@ -27,21 +27,21 @@ const Cosmos = () => (
 
 const Footer = () => (
   <footer className="site-footer">
-    <span className="sig">◈</span> designed &amp; engineered by Frank Pizzella — transmitting from deep space
+    <span className="sig">◈</span> designed &amp; engineered by Frank Pizzella in Staten Island, NY
   </footer>
 );
 
-const Missions = () => (
-  <section id="missions" className="section">
-    <span className="section-kicker">03 // Missions</span>
+const Projects = () => (
+  <section id="projects" className="section">
+    <span className="section-kicker">03 // Projects</span>
     <h2 className="section-title">
       Things I&apos;ve launched
     </h2>
     <p className="section-lede">
-      Side projects that escaped the lab — a social beer-tracking app live on the
+      Side projects that escaped the lab: a social beer-tracking app live on the
       App Store, and a two-player chess game with every rule enforced.
     </p>
-    <div className="missions-grid">
+    <div className="projects-grid">
       <MobileApp />
       <ChessApp />
     </div>
@@ -63,7 +63,7 @@ const App = () => {
               <Header />
               <About />
               <Skills />
-              <Missions />
+              <Projects />
               <Contact />
               <Footer />
             </div>
