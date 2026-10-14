@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+
+import { trackPageView } from "./lib/analytics";
 
 import { Skills, Header, About, Resume, MobileApp, ChessApp, Contact } from "./container/";
 import { Navbar } from "./components/";
@@ -12,6 +14,24 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
+/**
+ * Log a GA4 page_view on every client-side route change.
+ * The initial page load is already tracked automatically by the gtag.js
+ * snippet in public/index.html, so the first render is skipped.
+ */
+const RouteChangeTracker = () => {
+  const { pathname } = useLocation();
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    trackPageView(pathname);
   }, [pathname]);
   return null;
 };
@@ -52,6 +72,7 @@ const App = () => {
   return (
     <>
       <ScrollToTop />
+      <RouteChangeTracker />
       <Routes>
       <Route
         path="/"

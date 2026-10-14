@@ -4,6 +4,7 @@ import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import { HiMail } from "react-icons/hi";
 
 import { AppWrap } from "../../wrapper";
+import { trackEvent } from "../../lib/analytics";
 import "./Contact.scss";
 
 const Contact = () => {
@@ -25,7 +26,11 @@ const Contact = () => {
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
-        <a className="contact__email" href="mailto:fpizz210@gmail.com">
+        <a
+          className="contact__email"
+          href="mailto:fpizz210@gmail.com"
+          onClick={() => trackEvent("contact_email_click")}
+        >
           <HiMail />
           fpizz210@gmail.com
         </a>

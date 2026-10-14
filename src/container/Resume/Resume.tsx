@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { HiDownload } from "react-icons/hi";
 
+import { trackEvent } from "../../lib/analytics";
 import "./Resume.scss";
 
 interface Entry {
@@ -101,6 +102,7 @@ const Resume = () => {
         download="FrankPizzella_Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackEvent("resume_download")}
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.5 }}

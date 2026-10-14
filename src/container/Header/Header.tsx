@@ -5,6 +5,7 @@ import { HiArrowDown } from "react-icons/hi";
 
 import { AppWrap } from "../../wrapper";
 import { images } from "../../constants";
+import { trackEvent } from "../../lib/analytics";
 import "./Header.scss";
 
 const spring = { type: "spring", stiffness: 90, damping: 16 } as const;
@@ -54,10 +55,18 @@ const Header = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...spring, delay: 0.4 }}
         >
-          <NavLink to="/resume" className="btn btn-primary">
+          <NavLink
+            to="/resume"
+            className="btn btn-primary"
+            onClick={() => trackEvent("header_cta_click", { cta: "view_resume" })}
+          >
             View Résumé
           </NavLink>
-          <a href="#contact" className="btn btn-ghost">
+          <a
+            href="#contact"
+            className="btn btn-ghost"
+            onClick={() => trackEvent("header_cta_click", { cta: "open_channel" })}
+          >
             Open a channel
           </a>
         </motion.div>
