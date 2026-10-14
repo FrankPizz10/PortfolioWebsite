@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { DiAndroid, DiApple } from "react-icons/di";
 
 import { images } from "../../constants";
+import { trackEvent } from "../../lib/analytics";
 
 const TECH = ["React Native", "Node.js", "AWS", "MySQL", "Firebase"];
 
@@ -40,6 +41,12 @@ const MobileApp = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary project__btn"
+            onClick={() =>
+              trackEvent("project_link_click", {
+                project: "beerpassport",
+                destination: "app_store",
+              })
+            }
           >
             <DiApple /> App Store
           </a>
@@ -49,6 +56,12 @@ const MobileApp = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-ghost project__btn"
+            onClick={() =>
+              trackEvent("project_link_click", {
+                project: "beerpassport",
+                destination: "android_apk",
+              })
+            }
           >
             <DiAndroid /> Android APK
           </a>

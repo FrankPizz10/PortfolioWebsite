@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { HiPlay } from "react-icons/hi";
 
 import { images } from "../../constants";
+import { trackEvent } from "../../lib/analytics";
 
 const TECH = ["React", "Socket.IO", "Node.js", "PostgreSQL"];
 
@@ -39,6 +40,12 @@ const ChessApp = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary project__btn"
+            onClick={() =>
+              trackEvent("project_link_click", {
+                project: "chess",
+                destination: "play",
+              })
+            }
           >
             <HiPlay /> Play now
           </a>
